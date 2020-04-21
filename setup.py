@@ -1,4 +1,3 @@
-  
 from distutils.core import setup
 
 setup(name='CE_Bot',
@@ -8,4 +7,4 @@ setup(name='CE_Bot',
       author_email='',
       url='',
       packages=[],
-      
+     )
