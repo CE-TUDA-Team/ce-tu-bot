@@ -21,8 +21,8 @@ class MyClient(discord.Client):
         print("new member " + str(member))
         ce_guild = get(client.guilds, name="CE")
         ce_welcome_channel = get(ce_guild.channels, name="willkommen")
-        await ce_welcome_channel.send("Willkommen " + str(member) + "! Ich bin der CE Hausbot und zu deinen Diensten." +
-                                      "Welche Veranstaltungen besuchst du? Schreib uns gerne deinen Studiengang und dein" +
+        await ce_welcome_channel.send("Willkommen " + str(member) + "! Ich bin der CE Hausbot und zu deinen Diensten. " +
+                                      "Welche Veranstaltungen besuchst du? Schreib uns gerne deinen Studiengang und dein " +
                                       "Semester!")
 
     @client.event
