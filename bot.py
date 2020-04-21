@@ -18,12 +18,11 @@ class MyClient(discord.Client):
 
     @client.event
     async def on_member_join(self, member):
-        print("new member " + str(member))
-        ce_guild = get(client.guilds, name="CE")
+    
         ce_welcome_channel = get(ce_guild.channels, name="willkommen")
-        await ce_welcome_channel.send("Willkommen " + str(member) + "! Ich bin der Hausbot und zu deinen Diensten." +
+        await ce_welcome_channel.send("Willkommen" + str(member) + "! Ich bin der CE Hausbot und zu deinen Diensten." +
                                       "Welche Veranstaltungen besuchst du? Schreib uns gerne deinen Studiengang und "
-                                      "Semester!")
+                                      !")
 
     @client.event
     async def on_member_update(self, before, after):
