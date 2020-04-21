@@ -43,4 +43,4 @@ class MyClient(discord.Client):
 
 # https://discordapp.com/oauth2/authorize?&client_id=701834228031291443&scope=bot
 client = MyClient()
-client.run("NzAxODM0MjI4MDMxMjkxNDQz.Xp3Q_g.fdTPu7q-7uFfqxF6mJuUISyYM0Y")
+client.run("NzAxODM0MjI4MDMxMjkxNDQz.Xp6qDw.iyYLLQy0ZF8GGpO37HCpys2E2WQ")
