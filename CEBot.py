@@ -3,6 +3,10 @@ import os
 from discord.ext import commands
 from discord.utils import get
 
+
+global ce_server
+
+
 intents = discord.Intents.all()
 client = commands.Bot(command_prefix='$', intents=intents)
 client.description = "Bot for the CE Discord Server"
@@ -10,8 +14,13 @@ client.description = "Bot for the CE Discord Server"
 
 @client.event
 async def on_ready():
+    global ce_server
     print("Der CE-Bot {0.user} hat sich eingeloggt. ~Niklas".format(client))
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="for commands"))
+    # control message for admins at log in
+    ce_server = get(client.guilds, name="CE")
+    admin_channel = get(ce_server.channels, name="bot_testing")
+    await admin_channel.send("Bot ist online")
 
 
 @client.event
@@ -31,10 +40,10 @@ async def on_member_join(member):
         "Dieser Bot kann dir mit $ersti [master]  deine Rolle als neuer Ce-(Master) Student geben!")
 
 
-@client.event
-async def on_member_update(before, after):
-    ce_guild = after.guild
-    print(str(after) + " changed")
+# @client.event
+# async def on_member_update(before, after):
+#     ce_guild = after.guild
+#     print(str(after) + " changed")
 
 
 @client.command()
