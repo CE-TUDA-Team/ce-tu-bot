@@ -31,20 +31,19 @@ class Roles(commands.Cog):
 
     @commands.command()
     @commands.guild_only()
-    async def vertiefung(self, ctx, richtung=None):
+    async def vertiefung(self, ctx, richtung:str=None):
         vertiefungsrollen = []
         for role in ctx.guild.roles:
             if role.name.startswith("Vertiefung"):
-                vertiefungsrollen.append(role.name)
-        print(*vertiefungsrollen)
-        if ("Vertiefung " + richtung not in vertiefungsrollen) or (richtung is None):
+                vertiefungsrollen.append(role.name.lower())
+        if ("vertiefung " + richtung.lower() not in vertiefungsrollen) or (richtung is None):
             await ctx.send("Bitte wähle zwischen: "
                            "Bauingenieurwesen, EtIt, Informatik, Maschinenbau, Mathe/Mechanik"
                            " oder im Master: "
                            "Strömung-Verbrennung und Computational_Robotics")
         else:
             for role in ctx.guild.roles:
-                if "Vertiefung " + richtung == role.name:
+                if "vertiefung " + richtung.lower() == role.name.lower():
                     await ctx.author.add_roles(role)
                     await ctx.send("Du erhälst die Rolle: Vertiefung " + richtung)
                     return
