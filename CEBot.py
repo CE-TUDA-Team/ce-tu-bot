@@ -39,21 +39,30 @@ async def on_member_update(before, after):
 
 @client.command()
 async def reload(ctx, extension):
-    await ctx.send(f'{extension} was reloaded!')
-    client.unload_extension(f'Cogs.{extension}')
-    client.load_extension(f'Cogs.{extension}')
+    if extension + '.py' not in os.listdir("Cogs"):
+        await ctx.send("No such extension!")
+    else:
+        await ctx.send(f'{extension} was reloaded!')
+        client.unload_extension(f'Cogs.{extension}')
+        client.load_extension(f'Cogs.{extension}')
 
 
 @client.command(signature="Unloads")
 async def unload(ctx, extension):
-    await ctx.send(f'{extension} was unloaded!')
-    client.unload_extension(f'Cogs.{extension}')
+    if extension + '.py' not in os.listdir("Cogs"):
+        await ctx.send("No such extension!")
+    else:
+        await ctx.send(f'{extension} was unloaded!')
+        client.unload_extension(f'Cogs.{extension}')
 
 
 @client.command()
 async def load(ctx, extension):
-    await ctx.send(f'{extension} was loaded!')
-    client.load_extension(f'Cogs.{extension}')
+    if extension + '.py' not in os.listdir("Cogs"):
+        await ctx.send("No such extension!")
+    else:
+        await ctx.send(f'{extension} was loaded!')
+        client.load_extension(f'Cogs.{extension}')
 
 
 for filename in os.listdir('./Cogs'):

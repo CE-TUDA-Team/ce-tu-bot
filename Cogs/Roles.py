@@ -1,3 +1,5 @@
+import os
+
 from discord.ext import commands
 from discord.utils import get
 
@@ -26,6 +28,26 @@ class Roles(commands.Cog):
             await ctx.send(f"Willkommen im ersten Bachelor Semester")
             sem1_role = get(ctx.guild.roles, name="Sem1")
             await ctx.author.add_roles(sem1_role)
+
+    @commands.command()
+    @commands.guild_only()
+    async def vertiefung(self, ctx, richtung):
+        vertiefungsrollen = []
+        for role in ctx.guild.roles:
+            if role.name.startswith("Vertiefung"):
+                vertiefungsrollen.append(role.name)
+        print(*vertiefungsrollen)
+        if "Vertiefung " + richtung not in vertiefungsrollen:
+            await ctx.send("Bitte wähle zwischen: "
+                           "Bauingenieurwesen, EtIt, Informatik, Maschinenbau, Mathe/Mechanik"
+                           " oder im Master: "
+                           "Strömung-Verbrennung und Computational_Robotics")
+        else:
+            for role in ctx.guild.roles:
+                if "Vertiefung " + richtung == role.name:
+                    await ctx.author.add_roles(role)
+                    await ctx.send("Du erhälst die Rolle: Vertiefung " + richtung)
+                    return
 
 
 def setup(client):
