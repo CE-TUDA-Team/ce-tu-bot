@@ -36,7 +36,6 @@ class Roles(commands.Cog):
         for role in ctx.guild.roles:
             if role.name.startswith("Vertiefung"):
                 vertiefungsrollen.append(role.name.lower())
-        # TODO aliases
         if richtung == "BI":
             richtung = "Bauingenieurwesen"
         elif richtung == "EtIt":
@@ -54,7 +53,7 @@ class Roles(commands.Cog):
             await ctx.send("Bitte wähle zwischen: "
                            "Bauingenieurwesen, Elektrotechnik-Informationstechnik, Informatik, Maschinenbau, Mathe/Mechanik"
                            " oder im Master: "
-                           "Strömung-Verbrennung und Computational_Robotics"
+                           "Strömung-Verbrennung und Computational_Robotics "
                            "Mögliche Abkürzungen: BI, EtIt, Info, MB, , MM, Robotics")
         else:
             for role in ctx.guild.roles:
