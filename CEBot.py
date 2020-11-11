@@ -37,7 +37,11 @@ async def on_member_join(member):
     await ce_welcome_channel.send(
         "Willkommen " + str(member) + "! Ich bin der CE Hausbot und zu deinen Diensten. "
         "Ändere gerne deinen Spitznamen zu einem besser zuzuordnenden Namen! "
-        "Dieser Bot kann dir mit $ersti [master]  deine Rolle als neuer Ce-(Master) Student geben!")
+        "Dieser Bot kann dir mit $ersti [master]  deine Rolle als neuer Ce-(Master) Student geben!"
+        "Außerdem kannst du mit $vertiefung [richtung] deine Vertiefungsrichtung angeben. Möglich sind:"
+        "Bauingenieurwesen, Elektrotechnik-Informationstechnik, Informatik, Maschinenbau, Mathe/Mechanik"
+        " oder im Master: Strömung-Verbrennung und Computational_Robotics"
+        "aliases: BI, EtIt, Info, MB, MM, Robotics")
 
 
 # @client.event
