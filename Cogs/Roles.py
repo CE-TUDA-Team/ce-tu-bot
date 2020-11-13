@@ -1,4 +1,4 @@
-import os
+import datetime
 
 from discord.ext import commands
 from discord.utils import get
@@ -31,22 +31,33 @@ class Roles(commands.Cog):
 
     @commands.command()
     @commands.guild_only()
+    async def gast(self, ctx):
+        await ctx.send(f"Hallo Gast!")
+        guest_role = get(ctx.guild.roles, name="Gast")
+        await ctx.author.add_roles(guest_role)
+
+    @commands.command()
+    @commands.guild_only()
     async def vertiefung(self, ctx, richtung: str = None):
         vertiefungsrollen = []
         for role in ctx.guild.roles:
             if role.name.startswith("Vertiefung"):
                 vertiefungsrollen.append(role.name.lower())
-        if richtung == "BI":
+        if richtung.lower() == "bi":
             richtung = "Bauingenieurwesen"
-        elif richtung == "EtIt":
+        elif richtung.lower() == "etit":
             richtung = "Elektrotechnik-Informationstechnik"
-        elif richtung == "Info":
+        elif richtung.lower() == "info":
             richtung = "Informatik"
-        elif richtung == "MB":
+        elif richtung.lower() == "mb":
             richtung = "Maschinenbau"
-        elif richtung == "MM":
+        elif richtung.lower() == "mm":
             richtung = "Mathe/Mechanik"
-        elif richtung == "Robotics":
+        elif richtung.lower() == "sv":
+            richtung = "Strömung-Verbrennung"
+        elif richtung.lower() == "rob":
+            richtung = "Computational_Robotics"
+        elif richtung.lower() == "robotics":
             richtung = "Computational_Robotics"
 
         if ("vertiefung " + richtung.lower() not in vertiefungsrollen) or (richtung is None):
@@ -54,7 +65,7 @@ class Roles(commands.Cog):
                            "Bauingenieurwesen, Elektrotechnik-Informationstechnik, Informatik, Maschinenbau, Mathe/Mechanik"
                            " oder im Master: "
                            "Strömung-Verbrennung und Computational_Robotics "
-                           "Mögliche Abkürzungen: BI, EtIt, Info, MB, , MM, Robotics")
+                           "Mögliche Abkürzungen: BI, EtIt, Info, MB, , MM, SV, Robotics")
         else:
             for role in ctx.guild.roles:
                 if "vertiefung " + richtung.lower() == role.name.lower():
@@ -65,8 +76,40 @@ class Roles(commands.Cog):
     @commands.command()
     @commands.guild_only()
     async def semester(self, ctx, num: int = -1):
-        # TODO add semester role
-        pass
+        # TODO add semester timer
+        for role in ctx.author.roles:
+            if f"Sem{num}" == str(role):
+                await ctx.send("Du besitzt diese Rolle schon.")
+                return
+        if num <= 0:
+            await ctx.send("Bitte gib ein Bachelor-Semester ab 1 an.")
+        elif num == 1:
+            role = get(ctx.guild.roles, name="Sem1")
+            await ctx.author.add_roles(role)
+            await ctx.send("Du erhälst die Rolle: Semester 1")
+        elif num == 2:
+            role = get(ctx.guild.roles, name="Sem2")
+            await ctx.author.add_roles(role)
+            await ctx.send("Du erhälst die Rolle: Semester 2")
+        elif num == 3:
+            role = get(ctx.guild.roles, name="Sem3")
+            await ctx.author.add_roles(role)
+            await ctx.send("Du erhälst die Rolle: Semester 3")
+        elif num == 4:
+            role = get(ctx.guild.roles, name="Sem4")
+            await ctx.author.add_roles(role)
+            await ctx.send("Du erhälst die Rolle: Semester 4")
+        elif num > 5:
+            role = get(ctx.guild.roles, name="Sem5+")
+            await ctx.author.add_roles(role)
+            await ctx.send("Du erhälst die Rolle: Semester 5+")
+
+    @commands.command()
+    @commands.guild_only()
+    async def master(self, ctx):
+        role = get(ctx.guild.roles, name="Master")
+        await ctx.author.add_roles(role)
+        await ctx.send("Du erhälst die Rolle: Master")
 
 
 def setup(client):
