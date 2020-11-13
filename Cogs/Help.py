@@ -14,7 +14,7 @@ class Help(commands.Cog):
 
     @commands.command()
     async def hilfe(self, ctx):
-        msg="""Derzeit verfügbare Rollen: \
+        msg="""Derzeit verfügbare Rollen:
             Per Bot:
                 `$ersti`
                 `$ersti Master`
