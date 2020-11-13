@@ -26,7 +26,7 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         await ctx.send("So ein Befehl existiert nicht.")
 
-
+"""
 @client.event
 async def on_member_join(member):
     print("new member " + str(member))
@@ -43,7 +43,7 @@ async def on_member_join(member):
     # "Bauingenieurwesen, Elektrotechnik-Informationstechnik, Informatik, Maschinenbau, Mathe/Mechanik"
     # " oder im Master: Strömung-Verbrennung und Computational_Robotics"
     # "aliases: BI, EtIt, Info, MB, MM, Robotics
-
+"""
 
 @client.command()
 async def reload(ctx, extension):

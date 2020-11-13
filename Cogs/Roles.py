@@ -111,6 +111,13 @@ class Roles(commands.Cog):
         await ctx.author.add_roles(role)
         await ctx.send("Du erhälst die Rolle: Master")
 
+    @commands.command()
+    @commands.guild_only()
+    async def spieler(self, ctx):
+        role = get(ctx.guild.roles, name="Gesellschaftsspiele")
+        await ctx.author.add_roles(role)
+        await ctx.send("Du erhälst die Rolle: Master")
+
 
 def setup(client):
     client.add_cog(Roles(client))
