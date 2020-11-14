@@ -17,7 +17,7 @@ async def on_ready():
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="for commands"))
     # control message for admins at log in
     ce_server = get(client.guilds, name="CE")
-    admin_channel = get(ce_server.channels, name="bot_testing")
+    admin_channel = get(ce_server.channels, name="logs")
     await admin_channel.send("Bot ist online")
 
 
@@ -37,13 +37,8 @@ async def on_member_join(member):
                                       "Ändere gerne deinen Spitznamen zu einem besser zuzuordnenden Namen! \n"
                                       "Schick den Admins bei role-call dein Semester!"
                                       "Der Bot kann dir dort auch mehr Rollen automatisch verteilen.")
-
-    # "Dieser Bot kann dir mit $ersti [master]  deine Rolle als neuer Ce-(Master) Student geben!"
-    # "Außerdem kannst du mit $vertiefung [richtung] deine Vertiefungsrichtung angeben. Möglich sind:"
-    # "Bauingenieurwesen, Elektrotechnik-Informationstechnik, Informatik, Maschinenbau, Mathe/Mechanik"
-    # " oder im Master: Strömung-Verbrennung und Computational_Robotics"
-    # "aliases: BI, EtIt, Info, MB, MM, Robotics
 """
+
 
 @client.command()
 async def reload(ctx, extension):
