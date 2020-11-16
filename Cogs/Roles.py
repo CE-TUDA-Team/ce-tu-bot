@@ -76,7 +76,6 @@ class Roles(commands.Cog):
     @commands.command()
     @commands.guild_only()
     async def semester(self, ctx, num: int = -1):
-        # TODO add semester timer
         for role in ctx.author.roles:
             if f"Sem{num}" == str(role):
                 await ctx.send("Du besitzt diese Rolle schon.")
@@ -113,10 +112,57 @@ class Roles(commands.Cog):
 
     @commands.command()
     @commands.guild_only()
-    async def spieler(self, ctx):
+    async def gesellschaftsspiele(self, ctx):
         role = get(ctx.guild.roles, name="Gesellschaftsspiele")
         await ctx.author.add_roles(role)
-        await ctx.send("Du erhälst die Rolle: Master")
+        await ctx.send("Alle sehen jetzt, dass du zumindest gerne am Tisch spielen würdest.")
+
+    @commands.command()
+    @commands.guild_only()
+    async def gaming(self, ctx):
+        role = get(ctx.guild.roles, name="Gaming")
+        await ctx.author.add_roles(role)
+        await ctx.send("Alle sehen jetzt, dass du ein begeisterter Gamer bist.")
+
+    """
+    @commands.command()
+    @commands.guild_only()
+    async def spielen(self, ctx):
+        role = get(ctx.guild.roles, name="Gesellschaftsspiele")
+        await ctx.author.add_roles(role)
+        await ctx.send("Du erhälst die Rolle für Gesellschaftsspiele")
+
+    @commands.command()
+    @commands.guild_only()
+    async def lernen(self, ctx):
+        role = get(ctx.guild.roles, name="Gesellschaftsspiele")
+        await ctx.author.remove_roles(role)
+        await ctx.send("Du erhälst die Rolle für Gesellschaftsspiele")
+
+    @commands.command(hidden=True)
+    @commands.guild_only()
+    async def spieleabend(self, ctx):
+        admin_role = get(ctx.guild.roles, name="admin")
+        if ctx.author.top_role == admin_role:
+            role = get(ctx.guild.roles, name="Gesellschaftsspiele")
+            for member in ctx.guild.members:
+                await member.add_roles(role)
+            await ctx.send("Alle Mitglieder können nun Teil am Spieleabend haben.")
+        else:
+            await ctx.send("Du besitzt nicht die Berechtigung diesen Befehl auszuführen!")
+
+    @commands.command(hidden=True)
+    @commands.guild_only()
+    async def spieleabendende(self, ctx):
+        admin_role = get(ctx.guild.roles, name="admin")
+        if ctx.author.top_role == admin_role:
+            role = get(ctx.guild.roles, name="Gesellschaftsspiele")
+            for member in ctx.guild.members:
+                await member.remove_roles(role)
+            await ctx.send("Alle Mitglieder sind nun fertig mit Spieleabend.")
+        else:
+            await ctx.send("Du besitzt nicht die Berechtigung diesen Befehl auszuführen!")
+    """
 
 
 def setup(client):
