@@ -27,7 +27,7 @@ async def on_command_error(ctx, error):
         await ctx.send("So ein Befehl existiert nicht.")
 
 """
-# Old welcome Message
+Old welcome Message
 @client.event
 async def on_member_join(member):
     print("new member " + str(member))
