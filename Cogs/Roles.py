@@ -98,7 +98,7 @@ class Roles(commands.Cog):
             role = get(ctx.guild.roles, name="Sem4")
             await ctx.author.add_roles(role)
             await ctx.send("Du erhälst die Rolle: Semester 4")
-        elif num > 5:
+        elif num >= 5:
             role = get(ctx.guild.roles, name="Sem5+")
             await ctx.author.add_roles(role)
             await ctx.send("Du erhälst die Rolle: Semester 5+")
