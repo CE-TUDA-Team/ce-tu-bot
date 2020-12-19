@@ -19,6 +19,18 @@ async def on_ready():
     ce_server = get(client.guilds, name="CE")
     admin_channel = get(ce_server.channels, name="logs")
     await admin_channel.send("Bot ist online")
+    # TODO delete temporary role for Semester
+    for i in range(1, 5):
+        if get(ce_server.roles, name="help_Sem"+str(i)) is not None:
+            temp_role = get(ce_server.roles, name="help_Sem"+str(i))
+            print(temp_role)
+            for member in temp_role.members:
+                await member.remove_roles(temp_role)
+    if get(ce_server.roles, name="help_Sem5+") is not None:
+        temp_role = get(ce_server.roles, name="help_Sem5+")
+        print(temp_role)
+        for member in temp_role.members:
+            await member.remove_roles(temp_role)
 
 
 @client.event
