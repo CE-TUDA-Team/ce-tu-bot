@@ -77,7 +77,7 @@ class Roles(commands.Cog):
     @commands.guild_only()
     async def semester(self, ctx, num: int = -1):
         for role in ctx.author.roles:
-            if f"Sem{num}" == str(role) or (num >= 5 and f"help_Sem5+" == str(role)):
+            if f"Sem{num}" == str(role) or (num >= 5 and f"Sem5+" == str(role)):
                 await ctx.send("Du besitzt diese Rolle schon.")
                 return
         if num <= 0:
@@ -126,33 +126,33 @@ class Roles(commands.Cog):
 
     @commands.command()
     @commands.guild_only()
-    async def helpSem(self, ctx, num: int = -1):
+    async def gastSem(self, ctx, num: int = -1):
         for role in ctx.author.roles:
-            if f"help_Sem{num}" == str(role) or (num >= 5 and f"help_Sem5+" == str(role)):
+            if f"Gast_Sem{num}" == str(role) or (num >= 5 and f"Gast_Sem5+" == str(role)):
                 await ctx.send("Du besitzt diese Rolle schon.")
                 return
         if num <= 0:
             await ctx.send("Bitte gib ein Bachelor-Semester ab 1 an.")
         elif num == 1:
-            role = get(ctx.guild.roles, name="help_Sem1")
+            role = get(ctx.guild.roles, name="Gast_Sem1")
             await ctx.author.add_roles(role)
-            await ctx.send("Du erhälst die temporäre Rolle: help_Semester 1")
+            await ctx.send("Du erhälst die temporäre Rolle: Gast_Semester 1")
         elif num == 2:
-            role = get(ctx.guild.roles, name="help_Sem2")
+            role = get(ctx.guild.roles, name="Gast_Sem2")
             await ctx.author.add_roles(role)
-            await ctx.send("Du erhälst die temporäre Rolle: help_Semester 2")
+            await ctx.send("Du erhälst die temporäre Rolle: Gast_Semester 2")
         elif num == 3:
-            role = get(ctx.guild.roles, name="help_Sem3")
+            role = get(ctx.guild.roles, name="Gast_Sem3")
             await ctx.author.add_roles(role)
-            await ctx.send("Du erhälst die temporäre Rolle: help_Semester 3")
+            await ctx.send("Du erhälst die temporäre Rolle: Gast_Semester 3")
         elif num == 4:
-            role = get(ctx.guild.roles, name="help_Sem4")
+            role = get(ctx.guild.roles, name="Gast_Sem4")
             await ctx.author.add_roles(role)
-            await ctx.send("Du erhälst die temporäre Rolle: help_Semester 4")
+            await ctx.send("Du erhälst die temporäre Rolle: Gast_Semester 4")
         elif num >= 5:
-            role = get(ctx.guild.roles, name="help_Sem5+")
+            role = get(ctx.guild.roles, name="Gast_Sem5+")
             await ctx.author.add_roles(role)
-            await ctx.send("Du erhälst die temporäre Rolle: help_Semester 5+")
+            await ctx.send("Du erhälst die temporäre Rolle: Gast_Semester 5+")
 
     """
     @commands.command()
