@@ -1,5 +1,3 @@
-import datetime
-
 from discord.ext import commands
 from discord.utils import get
 
@@ -90,10 +88,12 @@ class Roles(commands.Cog):
             role = get(ctx.guild.roles, name="Sem2")
             await ctx.author.add_roles(role)
             await ctx.send("Du erhälst die Rolle: Semester 2")
+            await self.noersti(ctx)
         elif num == 3:
             role = get(ctx.guild.roles, name="Sem3")
             await ctx.author.add_roles(role)
             await ctx.send("Du erhälst die Rolle: Semester 3")
+            await self.noersti(ctx)
         elif num == 4:
             role = get(ctx.guild.roles, name="Sem4")
             await ctx.author.add_roles(role)
@@ -102,6 +102,33 @@ class Roles(commands.Cog):
             role = get(ctx.guild.roles, name="Sem5+")
             await ctx.author.add_roles(role)
             await ctx.send("Du erhälst die Rolle: Semester 5+")
+
+    @commands.command()
+    @commands.guild_only()
+    async def nextsem(self, ctx):
+        for i in ["1", "2", "3", "4", "5+"]:
+            for role in ctx.author.roles:
+                if f"Sem{i}" == str(role):
+                    break
+            else:
+                print("Adding Semester " + i)
+                for role in ctx.guild.roles:
+                    if str(role) == f"Sem{i}":
+                        await ctx.author.add_roles(role)
+                        await ctx.send(f"Du erhälst die Rolle: Semester {i}")
+                        return
+        else:
+            await ctx.send("Du hast bereits alle Bachelor-Semesterrollen. "
+                           "Wenn du in den Master wechselst, kannst du wieder eine Rolle erhalten.")
+
+    @commands.command()
+    @commands.guild_only()
+    async def noersti(self, ctx):
+        for role in ctx.author.roles:
+            if "Ersti" == str(role):
+                await ctx.author.remove_roles(role)
+                await ctx.send("Du bist kein Ersti mehr.")
+                return
 
     @commands.command()
     @commands.guild_only()
@@ -115,7 +142,7 @@ class Roles(commands.Cog):
     async def gesellschaftsspiele(self, ctx):
         role = get(ctx.guild.roles, name="Gesellschaftsspiele")
         await ctx.author.add_roles(role)
-        await ctx.send("Alle sehen jetzt, dass du zumindest gerne am Tisch spielen würdest.")
+        await ctx.send("Alle sehen jetzt, dass du gerne am (virtuellen) Tisch spielst.")
 
     @commands.command()
     @commands.guild_only()
