@@ -123,6 +123,7 @@ class Roles(commands.Cog):
 
     @commands.command()
     @commands.guild_only()
+    @commands.has_role('Sem2')
     async def noersti(self, ctx):
         for role in ctx.author.roles:
             if "Ersti" == str(role):
