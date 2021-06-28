@@ -71,7 +71,7 @@ class Roles(commands.Cog):
                     await ctx.send("Du erhälst die Rolle: Vertiefung " + richtung)
                     return
 
-    @commands.command(aliases=["sem"])
+    @commands.command()
     @commands.guild_only()
     async def semester(self, ctx, num: int = -1):
         for role in ctx.author.roles:
