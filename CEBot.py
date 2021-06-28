@@ -1,7 +1,8 @@
 import discord
-import os
 from discord.ext import commands
 from discord.utils import get
+import os
+import logging
 
 global ce_server
 
@@ -13,7 +14,13 @@ client.description = "Bot for the CE Discord Server"
 @client.event
 async def on_ready():
     global ce_server
+    logger = logging.getLogger('discord')
+    logger.setLevel(logging.DEBUG)
+    handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+    handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+    logger.addHandler(handler)
     print("Der CE-Bot {0.user} hat sich eingeloggt. ~Niklas".format(client))
+
     # control message for admins at log in
     ce_server = get(client.guilds, name="Computational Engineering")
     admin_channel = get(ce_server.channels, name="logs")
@@ -29,26 +36,14 @@ async def on_ready():
     else:
         # await admin_channel.send("Bot in development")
         await client.change_presence(status=discord.Status.dnd)
+        await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=""))
+        print("local")
 
 
 @client.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         await ctx.send("So ein Befehl existiert nicht.")
-
-"""
-Old welcome Message
-@client.event
-async def on_member_join(member):
-    print("new member " + str(member))
-    ce_guild = member.guild
-    ce_welcome_channel = get(ce_guild.channels, name="willkommen")
-    await ce_welcome_channel.send(
-        "Willkommen " + str(member) + "! Ich bin der CE Hausbot und zu deinen Diensten. \n"
-                                      "Ändere gerne deinen Spitznamen zu einem besser zuzuordnenden Namen! \n"
-                                      "Schick den Admins bei role-call dein Semester!"
-                                      "Der Bot kann dir dort auch mehr Rollen automatisch verteilen.")
-"""
 
 
 @client.command()
