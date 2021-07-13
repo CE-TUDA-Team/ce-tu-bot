@@ -92,10 +92,9 @@ class Help(commands.Cog):
     async def send_embed_fs(self, ctx, title, text, channel: discord.TextChannel = None, url=None):
         embed = discord.Embed(title=title, url=url,
                               description=text,
-                              color=0x3572AC)
-        embed.set_author(name="Fachschaft",
-                         url="https://www.ce.tu-darmstadt.de/ce/studienbereich_ce/organisation_2/fachschaft_ce/index.de.jsp",
-                         icon_url=ctx.guild.icon_url)
+                              color=0x3572AC).set_author(name="Fachschaft",
+                                                         url="https://www.ce.tu-darmstadt.de/ce/studienbereich_ce/organisation_2/fachschaft_ce/index.de.jsp",
+                                                         icon_url=ctx.guild.icon_url)
         if channel is not None:
             await channel.send(embed=embed)
         else:
