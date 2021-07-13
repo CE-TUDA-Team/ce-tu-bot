@@ -89,19 +89,30 @@ class Help(commands.Cog):
     @commands.command()
     @commands.guild_only()
     @commands.has_any_role('Fachschaft', 'Team')
+    async def send_embed_fs(self, ctx, title, text, channel: discord.TextChannel = None, url=None):
+        embed = discord.Embed(title=title, url=url,
+                              description=text,
+                              color=0x3572AC)
+        embed.set_author(name="Fachschaft",
+                         url="https://www.ce.tu-darmstadt.de/ce/studienbereich_ce/organisation_2/fachschaft_ce/index.de.jsp",
+                         icon_url=ctx.guild.icon_url)
+        if channel is not None:
+            await channel.send(embed=embed)
+        else:
+            await ctx.send(embed=embed)
+
+    @commands.command()
+    @commands.guild_only()
+    @commands.has_any_role('Fachschaft', 'Team')
     async def send_embed(self, ctx, title, text, channel: discord.TextChannel = None, url=None):
         if url is not None:
             embed = discord.Embed(title=title, url=url,
-                                  description=text, # " ".join(text)
+                                  description=text,
                                   color=0x3572AC)
         else:
             embed = discord.Embed(title=title,
                                   description=text,
                                   color=0x3572AC)
-        if discord.utils.get(ctx.guild.roles, name='Fachschaft') in ctx.author.roles:
-            embed.set_author(name="Fachschaft",
-                             url="https://www.ce.tu-darmstadt.de/ce/studienbereich_ce/organisation_2/fachschaft_ce/index.de.jsp",
-                             icon_url=ctx.guild.icon_url)
         if channel is not None:
             await channel.send(embed=embed)
         else:
