@@ -74,6 +74,7 @@ class Roles(commands.Cog):
     @commands.command(aliases=["sem"])
     @commands.guild_only()
     async def semester(self, ctx, num: int = -1):
+        last_message = ctx.last_message
         for role in ctx.author.roles:
             if f"Sem{num}" == str(role) or (num >= 5 and f"Sem5+" == str(role)):
                 await ctx.send("Du besitzt diese Rolle schon.")
@@ -102,6 +103,8 @@ class Roles(commands.Cog):
             role = get(ctx.guild.roles, name="Sem5+")
             await ctx.author.add_roles(role)
             await ctx.send("Du erhälst die Rolle: Semester 5+")
+        if (last_message != None):
+            await last_message.delete(delay=60)
 
     @commands.command()
     @commands.guild_only()
