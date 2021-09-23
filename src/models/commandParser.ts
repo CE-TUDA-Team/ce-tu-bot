@@ -9,7 +9,6 @@ export class CommandParser {
   readonly commandPrefix: string;
 
   constructor(message: Message, prefix: string) {
-
     this.commandPrefix = prefix;
     const splitMessage = message.content.slice(prefix.length).trim().split(/ +/g);
     const commandName = splitMessage.shift() || "";

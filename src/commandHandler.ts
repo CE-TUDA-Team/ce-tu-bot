@@ -26,7 +26,7 @@ export default class CommandHandler {
       return;
     }
 
-    message.reply(`CE_Bot received '${this.echoMessage(message)}' from ${message.author.tag}`);
+    await message.reply(`CE_Bot received '${this.echoMessage(message)}' from ${message.author.tag}`);
 
     const commandParser = new CommandParser(message, this.prefix);
 
