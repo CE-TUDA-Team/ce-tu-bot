@@ -1,1 +1,1 @@
-worker: python CEBot.py
+worker: npm start
