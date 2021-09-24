@@ -9,3 +9,6 @@ build/**/*
 
 # Ignore lock file
 package-lock.json
+
+# Ignore Code Editor Files
+.idea/*
