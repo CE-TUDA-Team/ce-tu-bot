@@ -12,3 +12,6 @@ package-lock.json
 
 # Ignore Code Editor Files
 .idea/*
+
+#Ignore old python
+Cogs\__pycache__\*
