@@ -14,6 +14,11 @@
 .idea/**/shelf
 Cogs\__pycache__\*
 
+# New Branch
+node_modules/*
+package-lock.json
+
+
 # Generated files
 .idea/**/contentModel.xml
 
@@ -252,3 +257,4 @@ dmypy.json
 .prof
 
 # End of https://www.toptal.com/developers/gitignore/api/pycharm,python
+
