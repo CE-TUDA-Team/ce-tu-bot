@@ -5,9 +5,9 @@ import slashCommands from './slashCommands'
 import {SlashCommandBuilder} from "@discordjs/builders";
 
 export function registerSlashCommands() {
-    if (!DISCORD_TOKEN || !CLIENT_ID ||  !GUILD_ID ) {
+    if (!DISCORD_TOKEN || !CLIENT_ID || !GUILD_ID) {
         console.log('Unable to refresh application (/) commands.');
-    }else {
+    } else {
         const rest = new REST({version: '9'}).setToken(DISCORD_TOKEN);
 
         let cmddatas: Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">[] = [];
@@ -19,7 +19,7 @@ export function registerSlashCommands() {
 
                 await rest.put(
                     Routes.applicationGuildCommands(CLIENT_ID, GUILD_ID),
-                    { body: cmddatas },
+                    {body: cmddatas},
                 );
 
                 console.log('Successfully reloaded application (/) commands.');

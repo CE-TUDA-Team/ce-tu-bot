@@ -1,5 +1,5 @@
 import slashCommands from "./slashCommands";
-import {CommandInteraction, Interaction} from 'discord.js';
+import {ButtonInteraction, CommandInteraction, Interaction} from 'discord.js';
 
 
 export default class InteractionHandler {
@@ -13,6 +13,9 @@ export default class InteractionHandler {
                 //await commandInteraction.deferReply({ ephemeral: cmd.isPrivateCommand });
                 await cmd.run(commandInteraction);
             }
+        } else if (interaction.isButton()){
+            const buttonInteraction : ButtonInteraction = interaction;
+            // TODO ... put cmd and button handlers better together
         }
     }
 }
