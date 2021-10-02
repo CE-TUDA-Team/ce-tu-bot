@@ -37,9 +37,11 @@
     "ts-node": "latest"
   },
   "dependencies": {
-    "typescript": "latest",
+    "@discordjs/rest": "^0.1.0-canary.0",
+    "discord-api-types": "^0.23.1",
     "discord.js": "latest",
     "dotenv": "latest",
-    "rimraf": "latest"
+    "rimraf": "latest",
+    "typescript": "latest"
   }
 }

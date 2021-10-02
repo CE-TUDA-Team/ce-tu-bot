@@ -11,5 +11,7 @@ export class TimeCommand implements Command {
   async run(message: Message): Promise<void> {
     const now = new Date();
     await message.reply(`${now.getHours()} : ${now.getMinutes()}`);
+    const mes : Message = await message.channel.send('LOL');
+    await mes.reply('ok doki');
   }
 }
