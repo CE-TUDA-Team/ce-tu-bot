@@ -1,6 +1,6 @@
-import { REST } from "@discordjs/rest";
-import { Routes } from "discord-api-types/v9";
-import { DISCORD_TOKEN, CLIENT_ID, GUILD_ID } from './config/envConfig'
+import {REST} from "@discordjs/rest";
+import {Routes} from "discord-api-types/v9";
+import {CLIENT_ID, DISCORD_TOKEN, GUILD_ID} from './config/envConfig'
 import slashCommands from './slashCommands'
 import {SlashCommandBuilder} from "@discordjs/builders";
 
