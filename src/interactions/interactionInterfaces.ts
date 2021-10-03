@@ -1,5 +1,5 @@
 import {SlashCommandBuilder} from '@discordjs/builders'
-import {ButtonInteraction, CommandInteraction} from 'discord.js'
+import {ButtonInteraction, CommandInteraction, SelectMenuInteraction} from 'discord.js'
 
 
 export interface CommandInterface {
@@ -14,4 +14,10 @@ export interface ButtonInterface {
     checkButton(interaction: ButtonInteraction): boolean;
 
     runButton(interaction: ButtonInteraction): Promise<void>;
+}
+
+export interface SelectMenuInterface {
+    checkSelect(interaction: SelectMenuInteraction): boolean;
+
+    runSelect(interaction: SelectMenuInteraction): Promise<void>
 }

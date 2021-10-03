@@ -1,5 +1,5 @@
-import {buttons, commands} from "./interactions";
-import {ButtonInteraction, CommandInteraction, Interaction} from 'discord.js';
+import {buttons, commands, menus} from "./interactions";
+import {ButtonInteraction, CommandInteraction, Interaction, SelectMenuInteraction} from 'discord.js';
 
 
 export default class InteractionHandler {
@@ -8,16 +8,23 @@ export default class InteractionHandler {
             const commandInteraction: CommandInteraction = interaction;
             const cmd = commands.find(cmd => cmd.checkCommand(commandInteraction));
             if (!cmd) console.error("Can not find the application command " + commandInteraction.commandName)
-            else cmd.runCommand(commandInteraction).catch(()=>commandInteraction.reply('Ein interner Fehler ist aufgetreten :('));
+            else cmd.runCommand(commandInteraction).catch((e) => {
+                if(commandInteraction.deferred || commandInteraction.replied)  commandInteraction.channel?.send('Ein interner Fehler ist aufgetreten :(');
+                else commandInteraction.reply('Ein interner Fehler ist aufgetreten :(');
+                console.error(e);
+            });
 
         } else if (interaction.isButton()) {
             const buttonInteraction: ButtonInteraction = interaction;
             const btn = buttons.find(btn => btn.checkButton(buttonInteraction));
-            if (!btn) console.error("Can not find the application command " + buttonInteraction.customId)
+            if (!btn) console.error("Can not find the application button " + buttonInteraction.customId);
             else await btn.runButton(buttonInteraction);
 
-        } else if (interaction.isContextMenu()) {
-            // ...
+        } else if (interaction.isSelectMenu()) {
+            const selectMenuInteraction : SelectMenuInteraction = interaction;
+            const menu = menus.find(menu => menu.checkSelect(selectMenuInteraction));
+            if(!menu) console.error("Can not find the application select menu " + selectMenuInteraction.customId);
+            else await menu.runSelect(interaction);
         }
     }
 }

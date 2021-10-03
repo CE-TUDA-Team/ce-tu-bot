@@ -1,5 +1,12 @@
 import {SlashCommandBuilder} from "@discordjs/builders";
-import {ButtonInteraction, CommandInteraction, MessageActionRow, MessageButton} from 'discord.js';
+import {
+    ButtonInteraction,
+    CommandInteraction,
+    GuildChannel, Interaction, Message,
+    MessageActionRow,
+    MessageButton,
+    MessageEmbed
+} from 'discord.js';
 import {ButtonInterface, CommandInterface} from "./interactionInterfaces";
 
 
@@ -15,12 +22,14 @@ export class AnnouncementInteraction implements CommandInterface, ButtonInterfac
     }
 
     async runCommand(interaction: CommandInteraction): Promise<void> {
-        await interaction.deferReply({ephemeral: true}); // now we need to editreply not just reply
-        let message = interaction.options.getString('message', true);
-        let channel = interaction.options.getChannel('channel', false);
+        //await interaction.deferReply({ephemeral: true}); // now we need to editreply not just reply
+        const message = interaction.options.getString('message', true);
+        const channel= interaction.options.getChannel('channel', false);
 
 
-        const row = new MessageActionRow()
+        const row1 = new MessageActionRow()
+            .addComponents(new MessageButton().setLabel('Channel: ' + (channel ? channel.name : 'this')));
+        const row2 = new MessageActionRow()
             .addComponents(
                 new MessageButton()
                     .setCustomId('announcement_BTN_send')
@@ -31,15 +40,34 @@ export class AnnouncementInteraction implements CommandInterface, ButtonInterfac
                     .setLabel('Nicht senden')
                     .setStyle('DANGER'),
             );
+        const embed = new MessageEmbed()
+            .setColor('#0099ff')
+            .setTitle('Some title')
+            .setURL('https://discord.js.org/')
+            .setDescription(message);
 
+        await interaction.reply({content: 'Pong!', embeds: [embed], components: [row2], ephemeral: true});
     }
 
     checkButton(interaction: ButtonInteraction): boolean {
-        return false;
+        const buttonsIds = ['announcement_BTN_send', 'announcement_BTN_notsend']
+        return !!buttonsIds.find((id) => id === interaction.customId);
     }
 
     runButton(interaction: ButtonInteraction): Promise<void> {
-        return Promise.resolve(undefined);
+        if(interaction.customId === 'announcement_BTN_notsend'){
+            const prevMessage : Message =  <Message> interaction.message;
+            interaction.reply({content: 'Not send!', ephemeral: true});
+            return Promise.resolve()
+        }
+        if(interaction.customId === 'announcement_BTN_send'){
+            const prevMessage : Message =  <Message> interaction.message;
+            const channel = interaction.channel;
+            channel?.send({ embeds: [prevMessage.embeds[0]]});
+            interaction.reply({content: 'Send', ephemeral: true});
+            return Promise.resolve()
+        }
+        return Promise.reject("Can't handle")
     }
 
 }

@@ -26,7 +26,8 @@ export class SemesterInteraction implements CommandInterface {
             num = 5;
         }
         const rolename = roles[num - 1];
-        const role = interaction.guild?.roles.cache?.find(r => r.name === rolename);
+        const serverRoleManager = interaction.guild?.roles
+        const role = serverRoleManager?.cache?.find(r => r.name === rolename);
         if (!role) return Promise.reject('Oh no');
         const memberRoleManager: GuildMemberRoleManager = <GuildMemberRoleManager>interaction.member?.roles;
         if (!memberRoleManager) return Promise.reject('Oh no');
@@ -35,6 +36,21 @@ export class SemesterInteraction implements CommandInterface {
             await interaction.reply('Du besitzt diese Rolle schon.');
             return;
         }
-        memberRoleManager.add(role).then(() => interaction.reply('Du erhälst die Rolle: ' + rolename));
+
+        if(num > 1) {
+            const erstiRole = memberRoleManager.cache.find(r => r.name === 'Ersti');
+            if (erstiRole)  await memberRoleManager.remove(erstiRole);
+            await memberRoleManager.add(role);
+            await interaction.reply('Du erhälst die Rolle: ' + rolename);
+            return;
+        }
+
+        if(num === 1) {
+            const erstiRole = serverRoleManager?.cache.find(r => r.name === 'Ersti');
+            if (erstiRole)  await memberRoleManager.add(erstiRole);
+            await memberRoleManager.add(role);
+            await interaction.reply('Willkommen auf Computational Engineering, du erhältst alle Erstsemestler Rollen.');
+            return;
+        }
     }
 }
