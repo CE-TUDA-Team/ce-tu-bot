@@ -18,13 +18,21 @@ export default class InteractionHandler {
             const buttonInteraction: ButtonInteraction = interaction;
             const btn = buttons.find(btn => btn.checkButton(buttonInteraction));
             if (!btn) console.error("Can not find the application button " + buttonInteraction.customId);
-            else await btn.runButton(buttonInteraction);
+            else btn.runButton(buttonInteraction).catch((e) => {
+                if(buttonInteraction.deferred || buttonInteraction.replied)  buttonInteraction.channel?.send('Ein interner Fehler ist aufgetreten :(');
+                else buttonInteraction.reply('Ein interner Fehler ist aufgetreten :(');
+                console.error(e);
+            });
 
         } else if (interaction.isSelectMenu()) {
             const selectMenuInteraction : SelectMenuInteraction = interaction;
             const menu = menus.find(menu => menu.checkSelect(selectMenuInteraction));
             if(!menu) console.error("Can not find the application select menu " + selectMenuInteraction.customId);
-            else await menu.runSelect(interaction);
+            else menu.runSelect(interaction).catch((e) => {
+                if(selectMenuInteraction.deferred || selectMenuInteraction.replied)  selectMenuInteraction.channel?.send('Ein interner Fehler ist aufgetreten :(');
+                else selectMenuInteraction.reply('Ein interner Fehler ist aufgetreten :(');
+                console.error(e);
+            });
         }
     }
 }
