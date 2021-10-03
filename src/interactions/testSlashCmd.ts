@@ -1,8 +1,8 @@
-import SlashCommandInterface from "./slashCommandInterface";
+import {CommandInterface} from "./interactionInterfaces";
 import {SlashCommandBuilder} from "@discordjs/builders";
 import {CommandInteraction} from 'discord.js';
 
-export class TestSlashCmd implements SlashCommandInterface {
+export class TestSlashCmd implements CommandInterface {
     name = 'echo';
     isPrivateCommand = false;
     data = new SlashCommandBuilder()
@@ -13,12 +13,18 @@ export class TestSlashCmd implements SlashCommandInterface {
                 .setDescription('The input to echo back')
                 .setRequired(true));
 
-    async run(interaction: CommandInteraction): Promise<void> {
+    checkCommand(interaction: CommandInteraction): boolean {
+        return interaction.commandName === this.name;
+    }
+
+    async runCommand(interaction: CommandInteraction): Promise<void> {
         const wait = require('util').promisify(setTimeout);
         let input = await interaction.options.get('input', true);
         await interaction.reply('ok, give me a second');
         await wait(2000);
         await interaction.editReply('Pong! ' + input.value);
     }
+
+
 
 }

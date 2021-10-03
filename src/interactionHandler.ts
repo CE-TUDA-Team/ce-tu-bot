@@ -1,4 +1,4 @@
-import slashCommands from "./slashCommands";
+import {buttons, commands} from "./interactions";
 import {ButtonInteraction, CommandInteraction, Interaction} from 'discord.js';
 
 
@@ -6,16 +6,18 @@ export default class InteractionHandler {
     async handleInteraction(interaction: Interaction): Promise<void> {
         if (interaction.isCommand()) {
             const commandInteraction: CommandInteraction = interaction;
-            const cmd = slashCommands.find(cmd => commandInteraction.commandName === cmd.name);
-            if (!cmd) {
-                console.error("Can not find the application command " + commandInteraction.commandName)
-            } else {
-                //await commandInteraction.deferReply({ ephemeral: cmd.isPrivateCommand });
-                await cmd.run(commandInteraction);
-            }
-        } else if (interaction.isButton()){
-            const buttonInteraction : ButtonInteraction = interaction;
-            // TODO ... put cmd and button handlers better together
+            const cmd = commands.find(cmd => cmd.checkCommand(commandInteraction));
+            if (!cmd) console.error("Can not find the application command " + commandInteraction.commandName)
+            else await cmd.runCommand(commandInteraction);
+
+        } else if (interaction.isButton()) {
+            const buttonInteraction: ButtonInteraction = interaction;
+            const btn = buttons.find(btn => btn.checkButton(buttonInteraction));
+            if (!btn) console.error("Can not find the application command " + buttonInteraction.customId)
+            else await btn.runButton(buttonInteraction);
+
+        } else if (interaction.isContextMenu()) {
+            // ...
         }
     }
 }

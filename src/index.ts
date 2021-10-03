@@ -4,7 +4,7 @@ import {DISCORD_TOKEN} from './config/envConfig';
 import CommandHandler from './commandHandler';
 import InteractionHandler from "./interactionHandler";
 import config from './config/botConfig';
-import {registerSlashCommands} from "./registerSlashCommands";
+import {registerSlashCommands, unregisterSlashCommands} from "./registerSlashCommands";
 
 
 const client = new Client({
@@ -24,6 +24,10 @@ const interactionHandler = new InteractionHandler();
 if (false) {
   registerSlashCommands();
 }
+if (false) {
+  unregisterSlashCommands();
+}
+
 
 //////////////////////////////////////////////////////////////////
 //                    DISCORD CLIENT LISTENERS                  //
@@ -32,6 +36,7 @@ if (false) {
 client.on('ready', () => {
   console.log("CE_Bot has started");
 });
+
 client.on("messageCreate", (message: Message) => {
   commandHandler.handleMessage(message).then();
 });
