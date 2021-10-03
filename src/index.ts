@@ -22,9 +22,11 @@ const interactionHandler = new InteractionHandler();
 
 // do this only if slash cmd data has changed
 if (false) {
+  // noinspection UnreachableCodeJS
   registerSlashCommands();
 }
 if (false) {
+  // noinspection UnreachableCodeJS
   unregisterSlashCommands();
 }
 

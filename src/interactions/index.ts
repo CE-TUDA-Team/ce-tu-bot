@@ -1,6 +1,6 @@
 import {ButtonInterface, CommandInterface} from "./interactionInterfaces";
 import {SemesterInteraction} from "./semesterInteraction";
-import {AnnouncementInteraction} from "./announcementSlashCommand";
+import {AnnouncementInteraction} from "./announcementInteraction";
 
 export const commands : CommandInterface[] = [
     new SemesterInteraction(),

@@ -2,6 +2,7 @@ import {SlashCommandBuilder} from "@discordjs/builders";
 import {CommandInteraction, GuildMemberRoleManager} from 'discord.js';
 import {CommandInterface} from "./interactionInterfaces";
 
+
 export class SemesterInteraction implements CommandInterface {
     name = 'semester';
     data = new SlashCommandBuilder()
@@ -26,20 +27,14 @@ export class SemesterInteraction implements CommandInterface {
         }
         const rolename = roles[num - 1];
         const role = interaction.guild?.roles.cache?.find(r => r.name === rolename);
-        if (!role) return; // not good
-        const member = interaction.member;
-        if (!member) return; // not good
-        const roleManager: GuildMemberRoleManager = <GuildMemberRoleManager>member.roles;
+        if (!role) return Promise.reject('Oh no');
+        const memberRoleManager: GuildMemberRoleManager = <GuildMemberRoleManager>interaction.member?.roles;
+        if (!memberRoleManager) return Promise.reject('Oh no');
 
-        if (roleManager.cache.find(r => r.id === role.id)) {
+        if (memberRoleManager.cache.find(r => r.id === role.id)) {
             await interaction.reply('Du besitzt diese Rolle schon.');
             return;
         }
-
-        await roleManager.add(role);
-        await interaction.reply('Du erhälst die Rolle: ' + rolename);
-
+        memberRoleManager.add(role).then(() => interaction.reply('Du erhälst die Rolle: ' + rolename));
     }
-
-
 }
