@@ -11,7 +11,7 @@
     "prebuild": "rimraf ./build",
     "build": "tsc",
     "prestart": "npm run build",
-    "start": "npm update && npm install && node build/index.js"
+    "start": "node build/index.js"
   },
   "repository": {
     "type": "git",
