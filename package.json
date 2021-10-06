@@ -4,6 +4,9 @@
   "description": "Discord bot written in Typescript and discord.js hosted on Heroku",
   "main": "build/index.js",
   "type": "commonjs",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "start": "npm run build && node build/index.js",
     "dev": "npm run build && ts-node src/index.ts",
