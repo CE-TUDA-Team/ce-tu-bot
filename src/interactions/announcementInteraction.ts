@@ -55,7 +55,7 @@ export class AnnouncementInteraction implements CommandInterface, ButtonInterfac
             .setDescription(message);
         if (url) embed.setURL(url);
         if (channel) embed.setFooter('channel=' + channel.id)
-        await interaction.reply({content: 'Bidde eimal checken, ob das WIRKLICH so senden soll.', embeds: [embed], components: [row], ephemeral: true});
+        await interaction.reply({content: 'Bidde eimal checken, ob ich das WIRKLICH so senden soll.', embeds: [embed], components: [row], ephemeral: true});
     }
 
     checkButton(interaction: ButtonInteraction): boolean {
