@@ -35,7 +35,8 @@ export class AnnouncementInteraction implements CommandInterface, ButtonInterfac
         const hasRole = serverRoleManager?.cache?.find(r => (r.name === 'Team' || r.name === 'Fachschaft'));
 
         if(!hasRole){
-
+            await interaction.reply({content: 'Huch du bist keine Nudel. Die CE Polizei ist alarmiert.', ephemeral: true});
+            return;
         }
 
         const row = new MessageActionRow()
