@@ -1,6 +1,6 @@
 import {Client, Intents, Message} from 'discord.js'
 
-import {DISCORD_TOKEN} from './config/envConfig';
+import {DISCORD_TOKEN,REGISTER_CMDS} from './config/envConfig';
 import CommandHandler from './commandHandler';
 import InteractionHandler from "./interactionHandler";
 import config from './config/botConfig';
@@ -20,11 +20,11 @@ const client = new Client({
 const commandHandler = new CommandHandler(config.prefix);
 const interactionHandler = new InteractionHandler();
 
-// do this only if slash cmd data has changed
-if (false) {
-  // noinspection UnreachableCodeJS
+//check the env
+if (REGISTER_CMDS) {
   registerSlashCommands();
 }
+// do this only if slash cmd data has changed
 if (false) {
   // noinspection UnreachableCodeJS
   unregisterSlashCommands();
