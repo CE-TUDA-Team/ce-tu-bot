@@ -2,16 +2,14 @@
   "name": "ce-tu-bot",
   "version": "2.0.0",
   "description": "Discord bot written in Typescript and discord.js hosted on Heroku",
-  "main": "index.js",
+  "main": "build/index.js",
+  "type": "commonjs",
   "scripts": {
-    "lint": "eslint . --ext .ts",
-    "lint-and-fix": "eslint . --ext .ts --fix",
-    "prestart:dev": "npm run build",
-    "start:dev": "nodemon build/index.js",
-    "prebuild": "rimraf ./build",
-    "build": "tsc",
-    "prestart": "npm run build",
-    "start": "node build/index.js"
+    "start": "npm run build && node build/index.js",
+    "dev": "npm run build && ts-node src/index.ts",
+    "build": "npm update && tsc",
+    "lint": "eslint .",
+    "clean": "rm package-lock.json && rm -rf node_modules"
   },
   "repository": {
     "type": "git",
@@ -33,13 +31,12 @@
     "@typescript-eslint/eslint-plugin": "latest",
     "@typescript-eslint/parser": "latest",
     "eslint": "latest",
-    "nodemon": "latest",
     "ts-node": "latest"
   },
   "dependencies": {
     "@discordjs/rest": "^0.1.0-canary.0",
     "discord-api-types": "^0.23.1",
-    "discord.js": "latest",
+    "discord.js": "13.2.0",
     "dotenv": "latest",
     "rimraf": "latest",
     "typescript": "latest"
