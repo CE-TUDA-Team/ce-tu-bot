@@ -13,7 +13,7 @@ export class VertiefungInteraction implements CommandInterface, SelectMenuInterf
     name = 'vertiefung';
     data = new SlashCommandBuilder()
         .setName(this.name)
-        .setDescription('todo');
+        .setDescription('Du kannst hiermit deine Vertiefungrichtung wählen.');
 
     vertiefungsRichtungen: { label: string, value: string }[] = [
         {value: 'BI', label: 'Vertiefung Bauingenieurwesen'},
@@ -56,7 +56,7 @@ export class VertiefungInteraction implements CommandInterface, SelectMenuInterf
         if (!role) return Promise.reject('Oh no');
 
         await memberRoleManager.add(role);
-        await interaction.reply('Rolle hinzugefügt.');
+        await interaction.reply(interaction.member?.user.username + ' setzt ' + role.name + 'ein. War das eine gute Wahl?');
 
     }
 }

@@ -7,8 +7,8 @@ export class SemesterInteraction implements CommandInterface {
     name = 'semester';
     data = new SlashCommandBuilder()
         .setName(this.name)
-        .setDescription('todo')
-        .addIntegerOption(option => option.setName('nr').setDescription('todo').setRequired(true));
+        .setDescription('Du bist Bachelor Student schnappe dir hier deine Semesterrolle.')
+        .addIntegerOption(option => option.setName('nr').setDescription('Wie viele Semester bist du schon am verzweifeln?').setRequired(true));
 
     checkCommand(interaction: CommandInteraction): boolean {
         return interaction.commandName === 'semester';
@@ -41,7 +41,7 @@ export class SemesterInteraction implements CommandInterface {
             const erstiRole = memberRoleManager.cache.find(r => r.name === 'Ersti');
             if (erstiRole)  await memberRoleManager.remove(erstiRole);
             await memberRoleManager.add(role);
-            await interaction.reply('Du erhälst die Rolle: ' + rolename);
+            await interaction.reply('Yay du hast es bis zum ' + num + '. Semester geschafft.');
             return;
         }
 

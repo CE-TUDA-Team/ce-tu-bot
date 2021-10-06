@@ -13,11 +13,11 @@ import {ButtonInterface, CommandInterface} from "./interactionInterfaces";
 export class AnnouncementInteraction implements CommandInterface, ButtonInterface {
     data = new SlashCommandBuilder()
         .setName('announcement')
-        .setDescription('todo')
-        .addStringOption(option => option.setName('title').setDescription('todo').setRequired(true))
-        .addStringOption(option => option.setName('message').setDescription('todo').setRequired(true))
-        .addStringOption(option => option.setName('url').setDescription('todo').setRequired(false))
-        .addChannelOption(option => option.setName('channel').setDescription('todo').setRequired(false));
+        .setDescription('Command nur für Nudeln. Du kannst vorher nochmal checken was du da fabriziert hast.')
+        .addStringOption(option => option.setName('title').setDescription('Der Titel').setRequired(true))
+        .addStringOption(option => option.setName('message').setDescription('Die Massage (äh warte).').setRequired(true))
+        .addStringOption(option => option.setName('url').setDescription('Ne ordendliche URL (http://....)').setRequired(false))
+        .addChannelOption(option => option.setName('channel').setDescription('Chantal wähle eine Channel.').setRequired(false));
 
     //.addBooleanOption(option => option.setName('fachschaft').setDescription('...').setRequired(false))
 
@@ -31,7 +31,12 @@ export class AnnouncementInteraction implements CommandInterface, ButtonInterfac
         const message = interaction.options.getString('message', true);
         const url = interaction.options.getString('url', false);
         const channel = interaction.options.getChannel('channel', false);
+        const serverRoleManager = interaction.guild?.roles
+        const hasRole = serverRoleManager?.cache?.find(r => (r.name === 'Team' || r.name === 'Fachschaft'));
 
+        if(!hasRole){
+
+        }
 
         const row = new MessageActionRow()
             .addComponents(
@@ -48,9 +53,9 @@ export class AnnouncementInteraction implements CommandInterface, ButtonInterfac
             .setColor('#0099ff')
             .setTitle(title)
             .setDescription(message);
-        if (url) embed.setURL(new URL(url).href);
+        if (url) embed.setURL(url);
         if (channel) embed.setFooter('channel=' + channel.id)
-        await interaction.reply({content: 'Pong!', embeds: [embed], components: [row], ephemeral: true});
+        await interaction.reply({content: 'Bidde eimal checken, ob das WIRKLICH so senden soll.', embeds: [embed], components: [row], ephemeral: true});
     }
 
     checkButton(interaction: ButtonInteraction): boolean {
@@ -72,8 +77,8 @@ export class AnnouncementInteraction implements CommandInterface, ButtonInterfac
             prevEmbed = prevMessage.embeds[0].setFooter('');
             if (channel?.isText()) {
                 channel?.send({embeds: [prevEmbed]});
-                await interaction.reply({content: 'Send', ephemeral: true});
-            } else await interaction.reply({content: 'Cant find channel', ephemeral: true});
+                await interaction.reply({content: 'Ok dann habe ich die Brieftauben losgeschickt.', ephemeral: true});
+            } else await interaction.reply({content: 'Chantal konnte den richtigen Channel nicht finden.', ephemeral: true});
             return;
         }
         return Promise.reject("Can't handle")
