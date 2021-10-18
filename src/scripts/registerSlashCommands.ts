@@ -1,6 +1,6 @@
 import {REST} from "@discordjs/rest";
 import {Routes} from "discord-api-types/v9";
-import {CLIENT_ID, DISCORD_TOKEN, GUILD_ID} from '../config/envConfig'
+import {BOT_NAME, CLIENT_ID, DISCORD_TOKEN, GUILD_ID} from '../config/envConfig'
 import Interactions from '../interactions'
 import {SlashCommandBuilder} from "@discordjs/builders";
 import Helper from "../helpers/helper";
@@ -24,6 +24,7 @@ export function registerSlashCommands(helper: Helper) {
                 );
 
                 console.log('Successfully reloaded application (/) commands.');
+                helper.channelHelper.findTextChannelViaId("777301412882939915")?.send({content: 'Successfully reloaded application (/) commands.'});
             } catch (error) {
                 console.error(error);
             }

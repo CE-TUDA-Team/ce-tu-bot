@@ -29,7 +29,7 @@ let helper: Helper;
 //////////////////////////////////////////////////////////////////
 
 client.on('ready', async () => {
-  console.log("CE_Bot has started");
+  console.log("CE_Bot ready");
   const guild = client.guilds.cache.find(g => g.id == GUILD_ID);
   if (!guild) {
     client.destroy();
