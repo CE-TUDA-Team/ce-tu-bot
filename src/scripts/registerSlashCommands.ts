@@ -1,17 +1,18 @@
 import {REST} from "@discordjs/rest";
 import {Routes} from "discord-api-types/v9";
-import {CLIENT_ID, DISCORD_TOKEN, GUILD_ID} from './config/envConfig'
-import {commands} from './interactions'
+import {CLIENT_ID, DISCORD_TOKEN, GUILD_ID} from '../config/envConfig'
+import Interactions from '../interactions'
 import {SlashCommandBuilder} from "@discordjs/builders";
+import Helper from "../helpers/helper";
 
-export function registerSlashCommands() {
+export function registerSlashCommands(helper: Helper) {
     if (!DISCORD_TOKEN || !CLIENT_ID || !GUILD_ID) {
         console.log('Unable to refresh application (/) commands.');
     } else {
         const rest = new REST({version: '9'}).setToken(DISCORD_TOKEN);
 
         let cmddatas: Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup">[] = [];
-        commands.forEach((cmd) => cmddatas.push(cmd.data));
+        new Interactions(helper).commands.forEach((cmd) => cmddatas.push(cmd.data));
 
         (async () => {
             try {

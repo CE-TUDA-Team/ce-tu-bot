@@ -1,16 +1,16 @@
 import {SlashCommandBuilder} from "@discordjs/builders";
 import {
-    ButtonInteraction,
+    ButtonInteraction, Channel,
     CommandInteraction,
     Message,
     MessageActionRow,
     MessageButton,
-    MessageEmbed
+    MessageEmbed, TextBasedChannels
 } from 'discord.js';
-import {ButtonInterface, CommandInterface} from "./interactionInterfaces";
+import {ButtonInterface, CommandInterface, InteractionSubHandler} from "./interactionInterfaces";
 
 
-export class AnnouncementInteraction implements CommandInterface, ButtonInterface {
+export class AnnouncementInteraction extends InteractionSubHandler implements CommandInterface, ButtonInterface {
     data = new SlashCommandBuilder()
         .setName('announcement')
         .setDescription('Command nur für Nudeln. Du kannst vorher nochmal checken was du da fabriziert hast.')
@@ -31,8 +31,8 @@ export class AnnouncementInteraction implements CommandInterface, ButtonInterfac
         const message = interaction.options.getString('message', true);
         const url = interaction.options.getString('url', false);
         const channel = interaction.options.getChannel('channel', false);
-        const serverRoleManager = interaction.guild?.roles
-        const hasRole = serverRoleManager?.cache?.find(r => (r.name === 'Team' || r.name === 'Fachschaft'));
+
+        const hasRole = this.helper.memberHelper.memberHasRole(interaction.member, 'Team') || this.helper.memberHelper.memberHasRole(interaction.member, 'Team');
 
         if(!hasRole){
             await interaction.reply({content: 'Huch du bist keine Nudel. Die CE Polizei ist alarmiert.', ephemeral: true});
@@ -71,10 +71,10 @@ export class AnnouncementInteraction implements CommandInterface, ButtonInterfac
             return;
         }
         if (interaction.customId === 'announcement_BTN_send') {
-            const serverChannelManager = interaction.guild?.channels;
             const prevMessage: Message = <Message>interaction.message;
             let prevEmbed = prevMessage.embeds[0];
-            const channel = prevEmbed.footer ? serverChannelManager?.cache.find(ch => ch.id === prevEmbed.footer?.text?.replace('Channel=', '')) : interaction.channel;
+            const channel : Channel | TextBasedChannels | null | undefined  =
+                prevEmbed.footer ? this.helper.channelHelper.findChannelViaId(prevEmbed.footer?.text?.replace('Channel=', '')) : interaction.channel ;
             prevEmbed = prevMessage.embeds[0].setFooter('');
             if (channel?.isText()) {
                 channel?.send({embeds: [prevEmbed]});

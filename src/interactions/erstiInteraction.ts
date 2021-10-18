@@ -1,9 +1,9 @@
 import {SlashCommandBuilder} from "@discordjs/builders";
 import {CommandInteraction, GuildMemberRoleManager} from 'discord.js';
-import {CommandInterface} from "./interactionInterfaces";
+import {CommandInterface, InteractionSubHandler} from "./interactionInterfaces";
 
 
-export class ErstiInteraction implements CommandInterface {
+export class ErstiInteraction extends InteractionSubHandler implements CommandInterface {
     name = 'ersti';
     data = new SlashCommandBuilder()
         .setName(this.name)

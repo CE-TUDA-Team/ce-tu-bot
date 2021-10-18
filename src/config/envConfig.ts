@@ -13,3 +13,5 @@ export const GUILD_ID = process.env["guild_id"];
 if(!GUILD_ID) console.error('Missing guild_id. Check .env');
 
 export const REGISTER_CMDS = process.env['register_cmds'] === 'true';
+
+export const BOT_NAME = process.env['bot_name'] ? process.env['bot_name'] : 'name_not_set';

@@ -1,11 +1,12 @@
 {
   "name": "ce-tu-bot",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Discord bot written in Typescript and discord.js hosted on Heroku",
   "main": "build/index.js",
   "type": "commonjs",
   "engines": {
-    "node": "16.x"
+    "node": "16.x",
+    "npm": "7.24"
   },
   "scripts": {
     "start": "npm run build && node build/index.js",
@@ -41,7 +42,6 @@
     "discord-api-types": "^0.23.1",
     "discord.js": "13.2.0",
     "dotenv": "latest",
-    "rimraf": "latest",
     "typescript": "latest"
   }
 }

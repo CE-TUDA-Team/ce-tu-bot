@@ -1,7 +1,7 @@
 import {Message} from "discord.js";
-import {GreetCommand, TimeCommand} from "./commands";
-import Command from "./commands/commandInterface";
-import {CommandParser} from "./models/commandParser";
+import {GreetCommand, TimeCommand} from "../commands";
+import Command from "../commands/commandInterface";
+import {CommandParser} from "../models/commandParser";
 
 export default class CommandHandler {
 
