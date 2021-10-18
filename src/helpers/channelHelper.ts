@@ -20,4 +20,9 @@ export default class ChannelHelper {
         if (channel?.isText()) return channel;
         return undefined;
     }
+
+    sendLogMessage(message: string): void {
+        console.log(message);
+        this.findTextChannelViaId("777301412882939915")?.send({content: '`Log:` '+ message});
+    }
 }

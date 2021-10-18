@@ -1,9 +1,10 @@
 import {Guild} from "discord.js";
 
 export default class RoleHelper {
-    constructor(guild: Guild) {
-        
-    }
+    guild: Guild;
 
+    constructor(guild: Guild) {
+        this.guild = guild;
+    }
 
 }

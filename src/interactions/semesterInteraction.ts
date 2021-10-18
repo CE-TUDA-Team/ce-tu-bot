@@ -1,9 +1,9 @@
 import {SlashCommandBuilder} from "@discordjs/builders";
-import {CommandInteraction, GuildMemberRoleManager} from 'discord.js';
-import {CommandInterface} from "./interactionInterfaces";
+import {CommandInteraction} from 'discord.js';
+import {CommandInterface, InteractionSubHandler} from "./interactionInterfaces";
 
 
-export class SemesterInteraction implements CommandInterface {
+export class SemesterInteraction extends InteractionSubHandler implements CommandInterface {
     name = 'semester';
     data = new SlashCommandBuilder()
         .setName(this.name)
@@ -26,29 +26,22 @@ export class SemesterInteraction implements CommandInterface {
             num = 5;
         }
         const rolename = roles[num - 1];
-        const serverRoleManager = interaction.guild?.roles
-        const role = serverRoleManager?.cache?.find(r => r.name === rolename);
-        if (!role) return Promise.reject('Oh no');
-        const memberRoleManager: GuildMemberRoleManager = <GuildMemberRoleManager>interaction.member?.roles;
-        if (!memberRoleManager) return Promise.reject('Oh no');
 
-        if (memberRoleManager.cache.find(r => r.id === role.id)) {
+        if (this.helper.memberHelper.memberHasRole(interaction.member, rolename)) {
             await interaction.reply('Du besitzt diese Rolle schon.');
             return;
         }
 
         if(num > 1) {
-            const erstiRole = memberRoleManager.cache.find(r => r.name === 'Ersti');
-            if (erstiRole)  await memberRoleManager.remove(erstiRole);
-            await memberRoleManager.add(role);
+            this.helper.memberHelper.memberRemoveRole(interaction.member, 'Ersti')
+            this.helper.memberHelper.memberAssignRole(interaction.member, rolename)
             await interaction.reply('Yay du hast es bis zum ' + num + '. Semester geschafft.');
             return;
         }
 
         if(num === 1) {
-            const erstiRole = serverRoleManager?.cache.find(r => r.name === 'Ersti');
-            if (erstiRole)  await memberRoleManager.add(erstiRole);
-            await memberRoleManager.add(role);
+            this.helper.memberHelper.memberAssignRole(interaction.member, 'Ersti')
+            this.helper.memberHelper.memberAssignRole(interaction.member, rolename)
             await interaction.reply('Willkommen auf Computational Engineering, du erhältst alle Erstsemestler Rollen.');
             return;
         }

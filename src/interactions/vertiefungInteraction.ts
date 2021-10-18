@@ -1,15 +1,14 @@
 import {SlashCommandBuilder,} from "@discordjs/builders";
 import {
     CommandInteraction,
-    GuildMemberRoleManager,
     MessageActionRow,
     MessageSelectMenu,
     SelectMenuInteraction
 } from 'discord.js';
-import {CommandInterface, SelectMenuInterface} from "./interactionInterfaces";
+import {CommandInterface, InteractionSubHandler, SelectMenuInterface} from "./interactionInterfaces";
 
 
-export class VertiefungInteraction implements CommandInterface, SelectMenuInterface {
+export class VertiefungInteraction extends InteractionSubHandler implements CommandInterface, SelectMenuInterface {
     name = 'vertiefung';
     data = new SlashCommandBuilder()
         .setName(this.name)
@@ -47,16 +46,10 @@ export class VertiefungInteraction implements CommandInterface, SelectMenuInterf
     }
 
     async runSelect(interaction: SelectMenuInteraction): Promise<void> {
-        const serverRoleManager = interaction.guild?.roles
-        const memberRoleManager: GuildMemberRoleManager = <GuildMemberRoleManager>interaction.member?.roles;
-        if (!memberRoleManager) return Promise.reject('Oh no');
-
         let selected = interaction.values[0];
-        let role = serverRoleManager?.cache.find(r => r.name === this.vertiefungsRichtungen.find(vr => vr.value === selected)?.label);
-        if (!role) return Promise.reject('Oh no');
 
-        await memberRoleManager.add(role);
-        await interaction.reply(interaction.member?.user.username + ' setzt ' + role.name + ' ein. War das eine gute Wahl?');
+        this.helper.memberHelper.memberAssignRole(interaction.member, selected)
+        await interaction.reply(interaction.member?.user.username + ' setzt ' + selected + ' ein. War das eine gute Wahl?');
 
     }
 }

@@ -1,9 +1,9 @@
 import {SlashCommandBuilder} from "@discordjs/builders";
-import {CommandInteraction, GuildMemberRoleManager} from 'discord.js';
-import {CommandInterface} from "./interactionInterfaces";
+import {CommandInteraction} from 'discord.js';
+import {CommandInterface, InteractionSubHandler} from "./interactionInterfaces";
 
 
-export class MasterInteraction implements CommandInterface {
+export class MasterInteraction extends InteractionSubHandler implements CommandInterface {
     name = 'master';
     data = new SlashCommandBuilder()
         .setName(this.name)
@@ -16,26 +16,21 @@ export class MasterInteraction implements CommandInterface {
 
     async runCommand(interaction: CommandInteraction): Promise<void> {
         const ersti = !!interaction.options.getBoolean('ersti', false);
-        const serverRoleManager = interaction.guild?.roles;
-        const memberRoleManager: GuildMemberRoleManager = <GuildMemberRoleManager>interaction.member?.roles;
-        if (!memberRoleManager) return Promise.reject('Oh no');
 
-
-        const masterRole = serverRoleManager?.cache.find(r => r.name === 'Master');
-        const erstiRole = serverRoleManager?.cache.find(r => r.name === 'Ersti');
-        if(!erstiRole || !masterRole) return Promise.reject('Err');
-
-        if (memberRoleManager.cache.find(r => r.id === masterRole.id) && !ersti) {
+        if (this.helper.memberHelper.memberHasRole(interaction.member, 'Master') && !ersti) {
             await interaction.reply('Du besitzt diese Rolle schon.');
             return;
-        } else if(memberRoleManager.cache.find(r => r.id === erstiRole.id) && !ersti){
-            await memberRoleManager.remove(erstiRole);
+
+        } else if(this.helper.memberHelper.memberHasRole(interaction.member, 'Ersti') && !ersti){
+
+            this.helper.memberHelper.memberRemoveRole(interaction.member, 'Ersti')
+
             await interaction.reply('Du besitzt kein Ersti mehr.');
             return;
         }
 
-        await memberRoleManager.add(masterRole);
-        if (ersti) await memberRoleManager.add(erstiRole);
+        this.helper.memberHelper.memberAssignRole(interaction.member, 'Master')
+        if (ersti) this.helper.memberHelper.memberAssignRole(interaction.member, 'Ersti')
         await interaction.reply('Willkommen Master of Disaster.');
     }
 }

@@ -29,7 +29,8 @@ export default class MemberHelper {
         const role = this.guild.roles.cache.find(role => role.name === rolename);
         if (!role) return;
         member = <GuildMember>member;
-        member.roles.remove(role).then();
+        if(this.memberHasRole(member, rolename))
+            member.roles.remove(role).then();
     }
 
 

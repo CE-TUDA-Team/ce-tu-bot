@@ -1,7 +1,7 @@
 import Helper from "../helpers/helper";
 import {SnowflakeUtil} from "discord.js";
 
-export async function sayHi(helper: Helper): Promise<void> {
+export async function cleanupLogs(helper: Helper): Promise<void> {
     //TODO Cleanup
     let channel = helper.channelHelper.findTextChannelViaId("777301412882939915");
     let time = Date.now() - 3 * 60 * 60 * 1000;
@@ -14,7 +14,7 @@ export async function sayHi(helper: Helper): Promise<void> {
         });
         if (!messages) return;
         await messages.forEach(message => {
-            if (message.author.username === 'CE_Bot' && (message.content.includes('Bot ist online') || message.content.includes('Bot ist am Starten'))) {
+            if (message.author.username === 'CE_Bot' && message.content.includes('`Log:`')) {
                 if (!message.deleted && message.deletable && message.id) message.delete();
             }
         });

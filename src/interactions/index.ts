@@ -18,20 +18,20 @@ export default class Interactions {
     constructor(helper: Helper) {
         this.helper = helper;
         this.commands = [
-            new SemesterInteraction(),
+            new SemesterInteraction(this.helper),
             new ErstiInteraction(this.helper),
             new AnnouncementInteraction(this.helper),
-            new VertiefungInteraction(),
-            new MasterInteraction(),
-            new GamingInteraction(),
-            new GesellschaftsspieleInteraction(),
-            new TeetrinkerInteraction(),
+            new VertiefungInteraction(this.helper),
+            new MasterInteraction(this.helper),
+            new GamingInteraction(this.helper),
+            new GesellschaftsspieleInteraction(this.helper),
+            new TeetrinkerInteraction(this.helper),
         ];
         this.buttons = [
             new AnnouncementInteraction(this.helper),
         ];
         this.menus = [
-            new VertiefungInteraction(),
+            new VertiefungInteraction(this.helper),
         ]
     }
 }

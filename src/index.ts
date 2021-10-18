@@ -1,13 +1,12 @@
-import {Client, Intents, Message} from 'discord.js'
+import {Client, Intents} from 'discord.js'
 
 import {BOT_NAME, DISCORD_TOKEN, GUILD_ID, REGISTER_CMDS} from './config/envConfig';
 import CommandHandler from './handlers/commandHandler';
 import InteractionHandler from "./handlers/interactionHandler";
 import config from './config/botConfig';
 import {registerSlashCommands, unregisterSlashCommands} from "./scripts/registerSlashCommands";
-import ChannelHelper from "./helpers/channelHelper";
 import Helper from "./helpers/helper";
-import {sayHi} from "./scripts/cleanupLogs";
+import {cleanupLogs} from "./scripts/cleanupLogs";
 
 
 const client = new Client({
@@ -29,20 +28,20 @@ let helper: Helper;
 //////////////////////////////////////////////////////////////////
 
 client.on('ready', async () => {
-  console.log("CE_Bot ready");
+
   const guild = client.guilds.cache.find(g => g.id == GUILD_ID);
   if (!guild) {
     client.destroy();
     return;
   }
   helper = new Helper(guild);
-  helper.channelHelper.findTextChannelViaId("777301412882939915")?.send({content: 'CE_Bot ist am Starten... `Type=' + BOT_NAME + '`'});
+  helper.channelHelper.sendLogMessage('CE_Bot ist am Starten. `Type=' + BOT_NAME + '`');
 
   commandHandler = new CommandHandler(config.prefix);
   interactionHandler = new InteractionHandler(helper);
 
 
-  await sayHi(helper);
+  await cleanupLogs(helper);
 
 
   //check the env
@@ -54,11 +53,11 @@ client.on('ready', async () => {
     // noinspection UnreachableCodeJS
     await unregisterSlashCommands();
   }
+  helper.channelHelper.sendLogMessage('CE_Bot ist online.');
 
-  helper.channelHelper.findTextChannelViaId("777301412882939915")?.send({content: 'CE_Bot ist online. `Type=' + BOT_NAME + '`'});
 });
 
-client.on("messageCreate", (message: Message) => {
+client.on("messageCreate", (message) => {
   commandHandler.handleMessage(message).then();
 });
 
@@ -66,9 +65,14 @@ client.on('interactionCreate', interaction => {
   interactionHandler.handleInteraction(interaction).then();
 });
 
-client.on("error", e => {
+client.on('warn', (info) => {
+  helper.channelHelper.findTextChannelViaId("777301412882939915")?.send({content: '`*Warn:*` ' + info});
+})
+
+client.on("error", (e)=> {
   console.error("Discord client error!", e);
+  helper.channelHelper.findTextChannelViaId("777301412882939915")?.send({content: '`*Error:*` ' + e.message});
 });
 
-client.login(DISCORD_TOKEN);
+client.login(DISCORD_TOKEN).then();
 

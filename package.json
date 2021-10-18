@@ -10,10 +10,9 @@
   },
   "scripts": {
     "start": "npm run build && node build/index.js",
-    "dev": "npm run build && ts-node src/index.ts",
+    "dev": "tsc && node build/index.js",
     "build": "npm update && tsc",
-    "lint": "eslint .",
-    "clean": "rm package-lock.json && rm -rf node_modules"
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
