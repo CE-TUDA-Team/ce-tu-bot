@@ -30,8 +30,11 @@ export class AnnouncementInteraction extends InteractionSubHandler implements Co
         const title = interaction.options.getString('title', true);
         const lastMessage = await this.helper.channelHelper.findLastMessageOfMemberInChannel(interaction.channel?.id, interaction.member);
         const message = lastMessage?.content;//interaction.options.getString('message', true);
-        if(!lastMessage || !message){
-            await interaction.reply({content: 'Huch ich sende immer deine letzte Nachricht, aber ich konnte keine aktuelle finden.', ephemeral: true});
+        if (!lastMessage || !message) {
+            await interaction.reply({
+                content: 'Huch ich sende immer deine letzte Nachricht, aber ich konnte keine aktuelle finden.',
+                ephemeral: true
+            });
             return;
         }
 
@@ -40,8 +43,11 @@ export class AnnouncementInteraction extends InteractionSubHandler implements Co
 
         const hasRole = this.helper.memberHelper.memberHasRole(interaction.member, 'Team') || this.helper.memberHelper.memberHasRole(interaction.member, 'Team');
 
-        if(!hasRole){
-            await interaction.reply({content: 'Huch du bist keine Nudel. Die CE Polizei ist alarmiert.', ephemeral: true});
+        if (!hasRole) {
+            await interaction.reply({
+                content: 'Huch du bist keine Nudel. Die CE Polizei ist alarmiert.',
+                ephemeral: true
+            });
             return;
         }
 
@@ -62,7 +68,15 @@ export class AnnouncementInteraction extends InteractionSubHandler implements Co
             .setDescription(message);
         if (url) embed.setURL(url);
         if (channel) embed.setFooter('channel=' + channel.id)
-        await interaction.reply({content: 'Bidde eimal checken, ob ich das WIRKLICH so senden soll.', embeds: [embed], components: [row], ephemeral: true});
+        await interaction.reply({
+            content: 'Bidde eimal checken, ob ich das WIRKLICH so senden soll.',
+            embeds: [embed],
+            components: [row],
+            ephemeral: true
+        });
+        try {
+            await lastMessage.delete();
+        } catch (e) {}
     }
 
     checkButton(interaction: ButtonInteraction): boolean {
