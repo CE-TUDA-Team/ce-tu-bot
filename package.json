@@ -6,7 +6,7 @@
   "type": "commonjs",
   "engines": {
     "node": "16.x",
-    "npm": "7.24"
+    "npm": "8.1.x"
   },
   "scripts": {
     "start": "npm run build && node build/index.js",
