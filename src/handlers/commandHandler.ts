@@ -1,5 +1,5 @@
 import {Message} from "discord.js";
-import {GreetCommand, TimeCommand} from "../commands";
+import {NoCommand} from "../commands";
 import Command from "../commands/commandInterface";
 import {CommandParser} from "../models/commandParser";
 
@@ -12,8 +12,7 @@ export default class CommandHandler {
     constructor(prefix: string) {
 
         const commandClasses = [
-            GreetCommand,
-            TimeCommand
+            NoCommand,
         ];
 
         this.commands = commandClasses.map(commandClass => new commandClass());

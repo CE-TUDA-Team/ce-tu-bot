@@ -1,4 +1,5 @@
-import {Channel, DMChannel, Guild, NewsChannel, TextChannel, ThreadChannel} from "discord.js";
+import {Channel, DMChannel, Guild, GuildMember, Message, NewsChannel, TextChannel, ThreadChannel} from "discord.js";
+import {APIInteractionGuildMember} from "discord-api-types";
 
 export default class ChannelHelper {
     guild: Guild;
@@ -19,6 +20,15 @@ export default class ChannelHelper {
         let channel = this.findChannelViaId(id);
         if (channel?.isText()) return channel;
         return undefined;
+    }
+
+    async findLastMessageOfMemberInChannel(channel_id: string | undefined, member: GuildMember | APIInteractionGuildMember | null): Promise<Message | undefined> {
+        let channel = this.findTextChannelViaId(channel_id);
+        await channel?.messages.fetch();
+        return channel?.messages.cache
+            .filter(postMessage => postMessage.author.id == member?.user.id)
+            .sort((postMessage1, postMessage2) => postMessage1.createdTimestamp - postMessage2.createdTimestamp)
+            .last();
     }
 
     sendLogMessage(message: string): void {

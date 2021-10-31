@@ -13,9 +13,9 @@ import {ButtonInterface, CommandInterface, InteractionSubHandler} from "./intera
 export class AnnouncementInteraction extends InteractionSubHandler implements CommandInterface, ButtonInterface {
     data = new SlashCommandBuilder()
         .setName('announcement')
-        .setDescription('Command nur für Nudeln. Du kannst vorher nochmal checken was du da fabriziert hast.')
+        .setDescription('Command nur für Nudeln. Schreibe vorher eine Nachricht die du publizieren willst.')
         .addStringOption(option => option.setName('title').setDescription('Der Titel').setRequired(true))
-        .addStringOption(option => option.setName('message').setDescription('Die Massage (äh warte).').setRequired(true))
+        //.addStringOption(option => option.setName('message').setDescription('Die Massage (äh warte).').setRequired(true))
         .addStringOption(option => option.setName('url').setDescription('Ne ordendliche URL (http://....)').setRequired(false))
         .addChannelOption(option => option.setName('channel').setDescription('Chantal wähle eine Channel.').setRequired(false));
 
@@ -26,9 +26,15 @@ export class AnnouncementInteraction extends InteractionSubHandler implements Co
     }
 
     async runCommand(interaction: CommandInteraction): Promise<void> {
-        //await interaction.deferReply({ephemeral: true}); // now we need to editreply not just reply
+
         const title = interaction.options.getString('title', true);
-        const message = interaction.options.getString('message', true);
+        const lastMessage = await this.helper.channelHelper.findLastMessageOfMemberInChannel(interaction.channel?.id, interaction.member);
+        const message = lastMessage?.content;//interaction.options.getString('message', true);
+        if(!lastMessage || !message){
+            await interaction.reply({content: 'Huch ich sende immer deine letzte Nachricht, aber ich konnte keine aktuelle finden.', ephemeral: true});
+            return;
+        }
+
         const url = interaction.options.getString('url', false);
         const channel = interaction.options.getChannel('channel', false);
 
@@ -68,6 +74,7 @@ export class AnnouncementInteraction extends InteractionSubHandler implements Co
         if (interaction.customId === 'announcement_BTN_notsend') {
             const prevMessage: Message = <Message>interaction.message;
             await interaction.reply({content: 'Not send!', ephemeral: true});
+            //TODO: delete message
             return;
         }
         if (interaction.customId === 'announcement_BTN_send') {
@@ -80,6 +87,7 @@ export class AnnouncementInteraction extends InteractionSubHandler implements Co
                 channel?.send({embeds: [prevEmbed]});
                 await interaction.reply({content: 'Ok dann habe ich die Brieftauben losgeschickt.', ephemeral: true});
             } else await interaction.reply({content: 'Chantal konnte den richtigen Channel nicht finden.', ephemeral: true});
+            //TODO: delete message
             return;
         }
         return Promise.reject("Can't handle")
