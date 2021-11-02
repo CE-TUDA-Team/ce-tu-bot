@@ -95,7 +95,7 @@ export class AnnouncementInteraction extends InteractionSubHandler implements Co
             const prevMessage: Message = <Message>interaction.message;
             let prevEmbed = prevMessage.embeds[0];
             const channel : Channel | TextBasedChannels | null | undefined  =
-                prevEmbed.footer ? this.helper.channelHelper.findChannelViaId(prevEmbed.footer?.text?.replace('Channel=', '')) : interaction.channel ;
+                prevEmbed.footer ? this.helper.channelHelper.findChannelViaId(prevEmbed.footer?.text?.replace('channel=', '')) : interaction.channel ;
             prevEmbed = prevMessage.embeds[0].setFooter('');
             if (channel?.isText()) {
                 channel?.send({embeds: [prevEmbed]});
