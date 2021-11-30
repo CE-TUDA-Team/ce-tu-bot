@@ -18,7 +18,9 @@ export default class MemberHelper {
 
     memberHasAnyRole(member: GuildMember | APIInteractionGuildMember | null, rolenames: string[]): boolean {
         for (const rolename in rolenames) {
-            if(this.memberHasRole(member, rolename)) return true;
+            if(this.memberHasRole(member, rolename)) {
+                return true;
+            }
         }
         return false;
     }
