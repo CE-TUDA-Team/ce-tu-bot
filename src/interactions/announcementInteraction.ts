@@ -41,7 +41,7 @@ export class AnnouncementInteraction extends InteractionSubHandler implements Co
         const url = interaction.options.getString('url', false);
         const channel = interaction.options.getChannel('channel', false);
 
-        const hasRole = this.helper.memberHelper.memberHasRole(interaction.member, 'Team') || this.helper.memberHelper.memberHasRole(interaction.member, 'Team');
+        const hasRole = this.helper.memberHelper.memberHasAnyRole(interaction.member, ['Team', 'Fachschaft', 'Fachschaftsrat']);
 
         if (!hasRole) {
             await interaction.reply({

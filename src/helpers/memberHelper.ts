@@ -16,6 +16,12 @@ export default class MemberHelper {
         return !!member.roles.cache.find(r => r.id === role.id);
     }
 
+    memberHasAnyRole(member: GuildMember | APIInteractionGuildMember | null, rolenames: string[]): boolean {
+        for (const rolename in rolenames) {
+            if(this.memberHasRole(member, rolename)) return true;
+        }
+        return false;
+    }
     memberAssignRole(member: GuildMember | APIInteractionGuildMember | null, rolename: string): void {
         if (!member) return;
         const role = this.guild.roles.cache.find(role => role.name === rolename);
