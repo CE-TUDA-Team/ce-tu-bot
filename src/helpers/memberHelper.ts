@@ -8,16 +8,21 @@ export default class MemberHelper {
         this.guild = guild;
     }
 
+    findGuildMember(member: GuildMember | APIInteractionGuildMember | null) : GuildMember | undefined {
+        if(!member) return undefined;
+        return this.guild.members.cache.find(m => m.id == member.user.id);
+    }
+
     memberHasRole(member: GuildMember | APIInteractionGuildMember | null, rolename: string): boolean {
         if (!member) return false;
         const role = this.guild.roles.cache.find(role => role.name === rolename);
         if (!role) return false;
-        member = <GuildMember>member;
-        return !!member.roles.cache.find(r => r.id === role.id);
+        let gmember = this.findGuildMember(member);
+        if(!gmember) return false;
+        return !!gmember.roles.cache.find(r => r.id === role.id);
     }
 
     memberHasAnyRole(member: GuildMember | APIInteractionGuildMember | null, rolenames: string[]): boolean {
-        if (!member) return false;
         for (const rolename in rolenames) {
             if(this.memberHasRole(member, rolename)) {
                 return true;
@@ -29,17 +34,19 @@ export default class MemberHelper {
         if (!member) return;
         const role = this.guild.roles.cache.find(role => role.name === rolename);
         if (!role) return;
-        member = <GuildMember>member;
-        member.roles.add(role).then();
+        let gmember = this.findGuildMember(member);
+        if(!gmember) return;
+        gmember.roles.add(role).then();
     }
 
     memberRemoveRole(member: GuildMember | APIInteractionGuildMember | null, rolename: string): void {
         if (!member) return;
         const role = this.guild.roles.cache.find(role => role.name === rolename);
         if (!role) return;
-        member = <GuildMember>member;
-        if(this.memberHasRole(member, rolename))
-            member.roles.remove(role).then();
+        let gmember = this.findGuildMember(member);
+        if(!gmember) return;
+        if(this.memberHasRole(gmember, rolename))
+            gmember.roles.remove(role).then();
     }
 
 
