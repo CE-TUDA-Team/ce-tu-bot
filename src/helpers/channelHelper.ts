@@ -22,7 +22,7 @@ export default class ChannelHelper {
         return undefined;
     }
 
-    async findLastMessageOfMemberInChannel(channel_id: string | undefined, member: GuildMember | APIInteractionGuildMember | null): Promise<Message | undefined> {
+    async findLastMessageOfMemberInChannel(channel_id: string | undefined, member:  GuildMember | APIInteractionGuildMember | null): Promise<Message | undefined> {
         let channel = this.findTextChannelViaId(channel_id);
         await channel?.messages.fetch();
         return channel?.messages.cache

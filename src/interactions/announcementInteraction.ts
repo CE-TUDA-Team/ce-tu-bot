@@ -1,14 +1,11 @@
 import {SlashCommandBuilder} from "@discordjs/builders";
 import {
-    ButtonInteraction, Channel,
-    CommandInteraction,
-    Message,
+    ButtonInteraction, CommandInteraction, Message,
     MessageActionRow,
     MessageButton,
-    MessageEmbed, TextBasedChannels
+    MessageEmbed
 } from 'discord.js';
 import {ButtonInterface, CommandInterface, InteractionSubHandler} from "./interactionInterfaces";
-
 
 export class AnnouncementInteraction extends InteractionSubHandler implements CommandInterface, ButtonInterface {
     data = new SlashCommandBuilder()
@@ -41,7 +38,7 @@ export class AnnouncementInteraction extends InteractionSubHandler implements Co
         const url = interaction.options.getString('url', false);
         const channel = interaction.options.getChannel('channel', false);
 
-        const hasRole = true; //this.helper.memberHelper.memberHasAnyRole(interaction.member, ['Team', 'Fachschaft', 'Fachschaftsrat']);
+        const hasRole = this.helper.memberHelper.memberHasAnyRole(interaction.member, ['Team', 'Fachschaft', 'Fachschaftsrat']);
 
         if (!hasRole) {
             await interaction.reply({
@@ -94,8 +91,7 @@ export class AnnouncementInteraction extends InteractionSubHandler implements Co
         if (interaction.customId === 'announcement_BTN_send') {
             const prevMessage: Message = <Message>interaction.message;
             let prevEmbed = prevMessage.embeds[0];
-            const channel : Channel | TextBasedChannels | null | undefined  =
-                prevEmbed.footer ? this.helper.channelHelper.findChannelViaId(prevEmbed.footer?.text?.replace('channel=', '')) : interaction.channel ;
+            const channel = prevEmbed.footer ? this.helper.channelHelper.findChannelViaId(prevEmbed.footer?.text?.replace('channel=', '')) : interaction.channel ;
             prevEmbed = prevMessage.embeds[0].setFooter('');
             if (channel?.isText()) {
                 channel?.send({embeds: [prevEmbed]});

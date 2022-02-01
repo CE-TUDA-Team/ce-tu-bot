@@ -6,10 +6,10 @@
   "type": "commonjs",
   "engines": {
     "node": "16.x",
-    "npm": "8.1.x"
+    "npm": "8.x.x"
   },
   "scripts": {
-    "start": "npm run build && node build/index.js",
+    "start": "node build/index.js",
     "dev": "tsc && node build/index.js",
     "build": "npm update && tsc",
     "lint": "eslint ."
@@ -37,9 +37,9 @@
     "ts-node": "latest"
   },
   "dependencies": {
-    "@discordjs/rest": "^0.1.0-canary.0",
-    "discord-api-types": "^0.23.1",
-    "discord.js": "13.2.0",
+    "@discordjs/rest": "^0.3.0",
+    "discord-api-types": "^0.26.1",
+    "discord.js": "13.6.0",
     "dotenv": "latest",
     "typescript": "latest"
   }
