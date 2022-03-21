@@ -21,6 +21,10 @@ export default class CommandHandler {
 
     /** Executes user commands contained in a message if appropriate. */
     async handleMessage(message: Message): Promise<void> {
+        ///
+            return;
+        ///DISABLE FOR NOW
+        /*
         if (message.author.bot || !this.isCommand(message)) {
             return;
         }
@@ -38,6 +42,7 @@ export default class CommandHandler {
                 message.reply(`'${this.echoMessage(message)}' failed because of ${error}`);
             });
         }
+        */
     }
 
     /** Sends back the message content after removing the prefix. */

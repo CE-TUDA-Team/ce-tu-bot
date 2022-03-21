@@ -7,6 +7,7 @@ import config from './config/botConfig';
 import {registerSlashCommands, unregisterSlashCommands} from "./scripts/registerSlashCommands";
 import Helper from "./helpers/helper";
 import {cleanupLogs} from "./scripts/cleanupLogs";
+import {prepareRolecallChannel} from "./scripts/prepareRolecallChannel";
 
 
 const client = new Client({
@@ -42,6 +43,7 @@ client.on('ready', async () => {
 
 
   await cleanupLogs(helper);
+  await prepareRolecallChannel(helper);
 
 
   //check the env

@@ -29,6 +29,7 @@ export default class Interactions {
         ];
         this.buttons = [
             new AnnouncementInteraction(this.helper),
+            new SemesterInteraction(this.helper),
         ];
         this.menus = [
             new VertiefungInteraction(this.helper),

@@ -15,13 +15,13 @@ export class VertiefungInteraction extends InteractionSubHandler implements Comm
         .setDescription('Du kannst hiermit deine Vertiefungrichtung wählen.');
 
     vertiefungsRichtungen: { label: string, value: string }[] = [
-        {value: 'BI', label: 'Vertiefung Bauingenieurwesen'},
-        {value: 'CR', label: 'Vertiefung Computational_Robotics'},
-        {value: 'ETIT', label: 'Vertiefung Elektrotechnik-Informationstechnik'},
-        {value: 'INFO', label: 'Vertiefung Informatik'},
-        {value: 'MB', label: 'Vertiefung Maschinenbau'},
-        {value: 'MM', label: 'Vertiefung Mathe/Mechanik'},
-        {value: 'SV', label: 'Vertiefung Strömung-Verbrennung'},
+        {value: 'Vertiefung Bauingenieurwesen', label: 'Bauingenieurwesen'},
+        {value: 'Vertiefung Computational_Robotics', label: 'Computational_Robotics'},
+        {value: 'Vertiefung Elektrotechnik-Informationstechnik', label: 'Elektrotechnik-Informationstechnik'},
+        {value: 'Vertiefung Informatik', label: 'Informatik'},
+        {value: 'Vertiefung Maschinenbau', label: 'Maschinenbau'},
+        {value: 'Vertiefung Mathe-Mechanik', label: 'Mathe-Mechanik'},
+        {value: 'Vertiefung Strömung-Verbrennung', label: 'Strömung-Verbrennung'},
     ];
 
     checkCommand(interaction: CommandInteraction): boolean {
@@ -47,7 +47,6 @@ export class VertiefungInteraction extends InteractionSubHandler implements Comm
 
     async runSelect(interaction: SelectMenuInteraction): Promise<void> {
         let selected = interaction.values[0];
-
         this.helper.memberHelper.memberAssignRole(interaction.member, selected)
         await interaction.reply(interaction.member?.user.username + ' setzt ' + selected + ' ein. War das eine gute Wahl?');
 
