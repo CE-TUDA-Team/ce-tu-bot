@@ -35,7 +35,7 @@ export class VertiefungInteraction extends InteractionSubHandler implements Comm
                     .setCustomId('vertiefung_SELECT')
                     .setPlaceholder('Nothing selected')
                     .addOptions(this.vertiefungsRichtungen)
-                    .setMinValues(1).setMaxValues(1),
+                    .setMinValues(1).setMaxValues(3),
             );
 
         await interaction.reply({content: 'Bitte wähle eine Vertiefungsrichtung', components: [row]});
@@ -46,9 +46,13 @@ export class VertiefungInteraction extends InteractionSubHandler implements Comm
     }
 
     async runSelect(interaction: SelectMenuInteraction): Promise<void> {
-        let selected = interaction.values[0];
-        this.helper.memberHelper.memberAssignRole(interaction.member, selected)
-        await interaction.reply(interaction.member?.user.username + ' setzt ' + selected + ' ein. War das eine gute Wahl?');
+        let gmember = this.helper.memberHelper.findGuildMember(interaction.member);
+        interaction.values.forEach(selected => this.helper.memberHelper.memberAssignRole(interaction.member, selected))
+        let str = interaction.values[0];
+        for (let i = 1; i < interaction.values.length; i++) {
+            str += ' und ' + interaction.values[i];
+        }
+        await interaction.reply(`${gmember} setzt ${str} ein. War das eine gute Wahl?`);
 
     }
 }
