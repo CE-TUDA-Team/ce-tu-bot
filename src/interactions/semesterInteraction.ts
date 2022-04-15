@@ -36,7 +36,7 @@ export class SemesterInteraction extends InteractionSubHandler implements Comman
         if(num > 1) {
             this.helper.memberHelper.memberRemoveRole(interaction.member, 'Ersti')
             this.helper.memberHelper.memberAssignRole(interaction.member, rolename)
-            await interaction.reply(`${gmember}: Yay du hast es bis zum ' + num + '. Semester geschafft.`);
+            await interaction.reply(`${gmember}: Yay du hast es bis zum ` + num + '. Semester geschafft.');
             return;
         }
 
