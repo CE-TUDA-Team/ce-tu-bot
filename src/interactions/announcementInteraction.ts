@@ -14,7 +14,7 @@ export class AnnouncementInteraction extends InteractionSubHandler implements Co
         .addStringOption(option => option.setName('title').setDescription('Der Titel').setRequired(true))
         //.addStringOption(option => option.setName('message').setDescription('Die Massage (äh warte).').setRequired(true))
         .addStringOption(option => option.setName('url').setDescription('Ne ordendliche URL (http://....)').setRequired(false))
-        .addChannelOption(option => option.setName('channel').setDescription('Chantal wähle eine Channel.').setRequired(false));
+        .addChannelOption(option => option.setName('channel').setDescription('Chantal wähle eine Channel.').setRequired(true));
 
     //.addBooleanOption(option => option.setName('fachschaft').setDescription('...').setRequired(false))
 
