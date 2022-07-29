@@ -13,8 +13,8 @@ export class AnnouncementInteraction extends InteractionSubHandler implements Co
         .setDescription('Command nur für Nudeln. Schreibe vorher eine Nachricht die du publizieren willst.')
         .addStringOption(option => option.setName('title').setDescription('Der Titel').setRequired(true))
         //.addStringOption(option => option.setName('message').setDescription('Die Massage (äh warte).').setRequired(true))
-        .addStringOption(option => option.setName('url').setDescription('Ne ordendliche URL (http://....)').setRequired(false))
-        .addChannelOption(option => option.setName('channel').setDescription('Chantal wähle eine Channel.').setRequired(true));
+        .addChannelOption(option => option.setName('channel').setDescription('Chantal wähle eine Channel.').setRequired(true))
+        .addStringOption(option => option.setName('url').setDescription('Ne ordendliche URL (http://....)').setRequired(false));
 
     //.addBooleanOption(option => option.setName('fachschaft').setDescription('...').setRequired(false))
 
