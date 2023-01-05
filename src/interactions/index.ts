@@ -8,6 +8,7 @@ import {GamingInteraction} from "./gamingInteraction";
 import {GesellschaftsspieleInteraction} from "./gesellschaftsspieleInteraction";
 import {TeetrinkerInteraction} from "./teetrinkerInteraction";
 import Helper from "../helpers/helper";
+import {EhemaligInteraction} from "./ehemaligInteraction";
 
 export default class Interactions {
     public helper: Helper;
@@ -26,11 +27,13 @@ export default class Interactions {
             new GamingInteraction(this.helper),
             new GesellschaftsspieleInteraction(this.helper),
             new TeetrinkerInteraction(this.helper),
+            new EhemaligInteraction(this.helper)
         ];
         this.buttons = [
             new AnnouncementInteraction(this.helper),
             new SemesterInteraction(this.helper),
             new MasterInteraction(this.helper),
+            new EhemaligInteraction(this.helper)
         ];
         this.menus = [
             new VertiefungInteraction(this.helper),

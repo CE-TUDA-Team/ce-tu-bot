@@ -38,6 +38,9 @@ export async function prepareRolecallChannel(helper: Helper) : Promise<void> {
 
         bsc_buttons.forEach(btn => row1.addComponents(btn));
         row2.addComponents(new MessageButton().setCustomId('master_master').setLabel('Master').setStyle('PRIMARY'));
+        row2.addComponents(new MessageButton().setCustomId('ehemalig').setLabel('Ehemalig').setStyle('SECONDARY'))
+
+
         const embed1 = new MessageEmbed()
             .setColor('#0099ff')
             .setTitle('BSc, MSc, OmG')
